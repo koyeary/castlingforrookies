@@ -8,7 +8,7 @@ nav {
   display: flex;
   justify-content: space-between;
   height: 60px;
-  width: 95%;
+  width: 98%;
   padding: 20px 40px 20px 20px;
   margin: auto;
   align-items: flex-start;
@@ -19,7 +19,7 @@ nav {
   flex-direction: row;
   align-items: center;
   gap: 20px;
-  width: 50px;
+  max-width: fit-content;
 }
 
 .nav-icon {

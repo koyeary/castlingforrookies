@@ -3,7 +3,10 @@ import React from "react";
 import { Drawer, List, ListItem, ListItemText } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import BarChartIcon from "@mui/icons-material/BarChart";
-import FilePresentIcon from "@mui/icons-material/FilePresent";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import DonutSmallIcon from "@mui/icons-material/DonutSmall";
+import LineAxisIcon from "@mui/icons-material/LineAxis";
+import NewspaperIcon from "@mui/icons-material/Newspaper";
 import "./components.css";
 
 interface MenuProps {
@@ -49,7 +52,7 @@ const Menu: React.FC<MenuProps> = ({ userName, isOpen, setIsOpen }) => {
         <h2 className="menu-header">Hi, {userName}</h2>
         <List style={{ marginRight: 50 }}>
           <ListItem onClick={() => {}}>
-            <FilePresentIcon style={{ marginRight: 10 }} />
+            <DonutSmallIcon style={{ marginRight: 10 }} />
             <ListItemText primary="My Portfolio" />
           </ListItem>
           <ListItem onClick={() => {}}>
@@ -57,15 +60,15 @@ const Menu: React.FC<MenuProps> = ({ userName, isOpen, setIsOpen }) => {
             <ListItemText primary="Analysis" />
           </ListItem>
           <ListItem onClick={() => {}}>
-            <BarChartIcon style={{ marginRight: 10 }} />
+            <CurrencyExchangeIcon style={{ marginRight: 10 }} />
             <ListItemText primary="ForEx" />
           </ListItem>
           <ListItem onClick={() => {}}>
-            <BarChartIcon style={{ marginRight: 10 }} />
+            <LineAxisIcon style={{ marginRight: 10 }} />
             <ListItemText primary="Markets" />
           </ListItem>
           <ListItem onClick={() => {}}>
-            <BarChartIcon style={{ marginRight: 10 }} />
+            <NewspaperIcon style={{ marginRight: 10 }} />
             <ListItemText primary="Intel" />
           </ListItem>
         </List>

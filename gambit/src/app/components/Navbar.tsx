@@ -1,15 +1,15 @@
+"use client";
 import React from "react";
+import { useRouter, redirect } from "next/navigation";
 import Menu from "./Menu";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Switch from "@mui/material/Switch";
 import Tooltip from "@mui/material/Tooltip";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import DashboardCustomizeRoundedIcon from "@mui/icons-material/DashboardCustomizeRounded";
-import LightModeIcon from "@mui/icons-material/LightMode";
+import HomeFilledIcon from "@mui/icons-material/HomeFilled";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
-import ModeNightIcon from "@mui/icons-material/ModeNight";
-
 import "./components.css";
 
 interface User {
@@ -19,21 +19,21 @@ interface User {
 
 interface NavbarProps {
   user: User;
+  DarkModeSwitch: React.ReactNode;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ user }) => {
-  /*   //const navigate = useNavigate();
-  const handleLogout = () => {
-    // navigate("/gambit");
-  };
-  const handleLogin = () => {
-    // navigate("/gambit/dashboard");
-  }; */
+const Navbar: React.FC<NavbarProps> = ({ user, DarkModeSwitch }) => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [isDarkMode, setIsDarkMode] = React.useState(true);
-  const toggleDarkMode = () => {
-    setIsDarkMode((prevMode) => !prevMode);
-    //document.body.classList.toggle("dark-mode", !isDarkMode);
+  const router = useRouter();
+
+  //const { DarkModeSwitch } = useDarkMode();
+  const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    redirect("/");
+  };
+
+  const handleLogin = () => {
+    router.push("/dashboard");
   };
 
   const toggleDrawer = () => {
@@ -58,31 +58,37 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
                     <DashboardCustomizeRoundedIcon className="nav-icon" />
                   </IconButton>
                 </Tooltip>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={isDarkMode}
-                      onChange={toggleDarkMode}
-                      name="darkModeToggle"
-                      color="primary"
-                    />
-                  }
-                  label={
-                    isDarkMode ? (
-                      <ModeNightIcon className="nav-icon" />
-                    ) : (
-                      <LightModeIcon className="nav-icon" />
-                    )
-                  }
-                />
+                <Divider orientation="vertical" flexItem />
               </div>
-              <div>
+              <div className="nav-group">
+                <Tooltip title="Home">
+                  <IconButton
+                    edge="start"
+                    color="inherit"
+                    aria-label="home"
+                    //onClick={toggleDrawer}
+                  >
+                    <HomeFilledIcon className="nav-icon" />
+                  </IconButton>
+                </Tooltip>
+                <Divider orientation="vertical" flexItem />
+                <Tooltip title="Dashboard">
+                  <IconButton
+                    edge="start"
+                    color="inherit"
+                    aria-label="dashboard"
+                    //onClick={toggleDrawer}
+                  >
+                    <DashboardIcon className="nav-icon" />
+                  </IconButton>
+                </Tooltip>
+                <Divider orientation="vertical" flexItem />
                 <Tooltip title="Log out">
                   <IconButton
                     edge="start"
                     color="inherit"
                     aria-label="log out"
-                    //onClick={toggleDrawer}
+                    onClick={handleLogout}
                   >
                     <LogoutRoundedIcon
                       className="nav-icon"
@@ -91,11 +97,12 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
                     />
                   </IconButton>
                 </Tooltip>
+                <Divider orientation="vertical" flexItem />
+                {DarkModeSwitch}
               </div>
             </>
           ) : (
             <>
-              <div></div>
               <div>
                 <span>Login</span>
                 <Tooltip title="Log in">
@@ -103,12 +110,9 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
                     edge="start"
                     color="inherit"
                     aria-label="log in"
-                    //onClick={handleLogin}
+                    onClick={handleLogin}
                   >
-                    <AccountCircleRoundedIcon
-                      className="nav-icon"
-                      /*  style={{ marginLeft: 20, cursor: "pointer" }} */
-                    />
+                    <AccountCircleRoundedIcon className="nav-icon" />
                   </IconButton>
                 </Tooltip>
               </div>
@@ -116,7 +120,9 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
           )}
         </nav>
       </header>
-      <Menu isOpen={isOpen} setIsOpen={setIsOpen} userName={userName} />
+      {user.isLoggedIn && (
+        <Menu isOpen={isOpen} setIsOpen={setIsOpen} userName={userName} />
+      )}
     </>
   );
 };
