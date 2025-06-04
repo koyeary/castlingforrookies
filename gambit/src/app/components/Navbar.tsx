@@ -26,7 +26,6 @@ const Navbar: React.FC<NavbarProps> = ({ user, DarkModeSwitch }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const router = useRouter();
 
-  //const { DarkModeSwitch } = useDarkMode();
   const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     redirect("/");
