@@ -1,6 +1,13 @@
 "use client";
 import React from "react";
-import { Drawer, List, ListItem, ListItemText } from "@mui/material";
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
@@ -38,38 +45,51 @@ const Menu: React.FC<MenuProps> = ({ userName, isOpen, setIsOpen }) => {
           },
         }}
       >
-        <ArrowBackIosNewIcon
-          style={{
-            //height: "100%",
-            width: 50,
-            cursor: "pointer",
-            position: "absolute",
-            right: 0,
-            top: 20,
-          }}
-          onClick={handleClose}
-        />
+        <ArrowBackIosNewIcon className="close-icon" onClick={handleClose} />
         <h2 className="menu-header">Hi, {userName}</h2>
-        <List style={{ marginRight: 50 }}>
-          <ListItem onClick={() => {}}>
-            <DonutSmallIcon style={{ marginRight: 10 }} />
-            <ListItemText primary="My Portfolio" />
+        <List
+          component="nav"
+          style={{ display: "flex", flexDirection: "column", width: "100%" }}
+        >
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <DonutSmallIcon style={{ marginRight: 10 }} />
+              </ListItemIcon>
+              <ListItemText primary="My Portfolio" />
+            </ListItemButton>
           </ListItem>
-          <ListItem onClick={() => {}}>
-            <BarChartIcon style={{ marginRight: 10 }} />
-            <ListItemText primary="Analysis" />
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <BarChartIcon style={{ marginRight: 10 }} />
+              </ListItemIcon>
+              <ListItemText primary="Analysis" />
+            </ListItemButton>
           </ListItem>
-          <ListItem onClick={() => {}}>
-            <CurrencyExchangeIcon style={{ marginRight: 10 }} />
-            <ListItemText primary="ForEx" />
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <CurrencyExchangeIcon style={{ marginRight: 10 }} />
+              </ListItemIcon>
+              <ListItemText primary="ForEx" />
+            </ListItemButton>
           </ListItem>
-          <ListItem onClick={() => {}}>
-            <LineAxisIcon style={{ marginRight: 10 }} />
-            <ListItemText primary="Markets" />
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <LineAxisIcon style={{ marginRight: 10 }} />
+              </ListItemIcon>
+              <ListItemText primary="Markets" />
+            </ListItemButton>
           </ListItem>
-          <ListItem onClick={() => {}}>
-            <NewspaperIcon style={{ marginRight: 10 }} />
-            <ListItemText primary="Intel" />
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <NewspaperIcon style={{ marginRight: 10 }} />
+              </ListItemIcon>
+              <ListItemText primary="Intel" />
+            </ListItemButton>
           </ListItem>
         </List>
       </Drawer>
