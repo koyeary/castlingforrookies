@@ -19,7 +19,7 @@ interface User {
 
 interface NavbarProps {
   user: User;
-  DarkModeSwitch: React.ReactNode;
+  DarkModeSwitch?: React.ReactNode;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ user, DarkModeSwitch }) => {
@@ -93,7 +93,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, DarkModeSwitch }) => {
                   </IconButton>
                 </Tooltip>
                 <Divider orientation="vertical" flexItem />
-                {DarkModeSwitch}
+                {DarkModeSwitch && DarkModeSwitch}
               </div>
             </>
           ) : (

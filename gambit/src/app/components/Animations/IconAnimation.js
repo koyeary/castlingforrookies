@@ -25,7 +25,7 @@ const IconAnimation = () => {
   return (
     <>
       <a.h1 style={{ ...translateY, ...translateX }}>
-        <FontAwesomeIcon icon={faChessKnight} /* style={{ color: "#FFF" }} */ />
+        <FontAwesomeIcon icon={faChessKnight} />
       </a.h1>
     </>
   );
