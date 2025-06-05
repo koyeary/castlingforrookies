@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Drawer,
   List,
@@ -23,6 +23,19 @@ interface MenuProps {
 }
 
 const Menu: React.FC<MenuProps> = ({ userName, isOpen, setIsOpen }) => {
+  const [selectedIndex, setSelectedIndex] = useState([0, 1, 2, 3, 4]);
+
+  const handleListItemClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    index: number
+  ) => {
+    if (!selectedIndex.includes(index)) {
+      setSelectedIndex([...selectedIndex, index]);
+    } else {
+      setSelectedIndex(selectedIndex.filter((i) => i !== index));
+    }
+  };
+
   const handleClose = () => {
     setIsOpen(false);
   };
@@ -52,7 +65,10 @@ const Menu: React.FC<MenuProps> = ({ userName, isOpen, setIsOpen }) => {
           style={{ display: "flex", flexDirection: "column", width: "100%" }}
         >
           <ListItem>
-            <ListItemButton>
+            <ListItemButton
+              selected={selectedIndex.includes(0)}
+              onClick={(event) => handleListItemClick(event, 0)}
+            >
               <ListItemIcon>
                 <DonutSmallIcon style={{ marginRight: 10 }} />
               </ListItemIcon>
@@ -60,7 +76,10 @@ const Menu: React.FC<MenuProps> = ({ userName, isOpen, setIsOpen }) => {
             </ListItemButton>
           </ListItem>
           <ListItem>
-            <ListItemButton>
+            <ListItemButton
+              selected={selectedIndex.includes(1)}
+              onClick={(event) => handleListItemClick(event, 1)}
+            >
               <ListItemIcon>
                 <BarChartIcon style={{ marginRight: 10 }} />
               </ListItemIcon>
@@ -68,7 +87,10 @@ const Menu: React.FC<MenuProps> = ({ userName, isOpen, setIsOpen }) => {
             </ListItemButton>
           </ListItem>
           <ListItem>
-            <ListItemButton>
+            <ListItemButton
+              selected={selectedIndex.includes(2)}
+              onClick={(event) => handleListItemClick(event, 2)}
+            >
               <ListItemIcon>
                 <CurrencyExchangeIcon style={{ marginRight: 10 }} />
               </ListItemIcon>
@@ -76,7 +98,10 @@ const Menu: React.FC<MenuProps> = ({ userName, isOpen, setIsOpen }) => {
             </ListItemButton>
           </ListItem>
           <ListItem>
-            <ListItemButton>
+            <ListItemButton
+              selected={selectedIndex.includes(3)}
+              onClick={(event) => handleListItemClick(event, 3)}
+            >
               <ListItemIcon>
                 <LineAxisIcon style={{ marginRight: 10 }} />
               </ListItemIcon>
@@ -84,7 +109,10 @@ const Menu: React.FC<MenuProps> = ({ userName, isOpen, setIsOpen }) => {
             </ListItemButton>
           </ListItem>
           <ListItem>
-            <ListItemButton>
+            <ListItemButton
+              selected={selectedIndex.includes(4)}
+              onClick={(event) => handleListItemClick(event, 4)}
+            >
               <ListItemIcon>
                 <NewspaperIcon style={{ marginRight: 10 }} />
               </ListItemIcon>
