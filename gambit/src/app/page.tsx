@@ -18,6 +18,7 @@ const Page: React.FC = () => {
         <Navbar
           user={{ userName: "", isLoggedIn: false }}
           DarkModeSwitch={null}
+          isDarkMode={true}
         />
         <main className="centered-content">
           <div className="title-animation-container">

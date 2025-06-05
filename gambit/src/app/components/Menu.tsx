@@ -18,11 +18,17 @@ import "./components.css";
 
 interface MenuProps {
   isOpen: boolean;
+  isDarkMode: boolean;
   userName: string;
   setIsOpen: (isOpen: boolean) => void;
 }
 
-const Menu: React.FC<MenuProps> = ({ userName, isOpen, setIsOpen }) => {
+const Menu: React.FC<MenuProps> = ({
+  userName,
+  isOpen,
+  setIsOpen,
+  isDarkMode,
+}) => {
   const [selectedIndex, setSelectedIndex] = useState([0, 1, 2, 3, 4]);
 
   const handleListItemClick = (
@@ -52,8 +58,8 @@ const Menu: React.FC<MenuProps> = ({ userName, isOpen, setIsOpen }) => {
           flexShrink: 0,
           "& .MuiDrawer-paper": {
             width: 360,
-            backgroundColor: "#1e1e1e",
-            color: "#fff",
+            backgroundColor: isDarkMode ? "#1e1e1e" : "#fff",
+            color: isDarkMode ? "#fff" : "#1e1e1e",
             borderRight: "none",
           },
         }}

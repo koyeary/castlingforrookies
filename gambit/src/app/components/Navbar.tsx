@@ -20,9 +20,14 @@ interface User {
 interface NavbarProps {
   user: User;
   DarkModeSwitch?: React.ReactNode;
+  isDarkMode: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ user, DarkModeSwitch }) => {
+const Navbar: React.FC<NavbarProps> = ({
+  user,
+  DarkModeSwitch,
+  isDarkMode,
+}) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const router = useRouter();
 
@@ -116,7 +121,12 @@ const Navbar: React.FC<NavbarProps> = ({ user, DarkModeSwitch }) => {
         </nav>
       </header>
       {user.isLoggedIn && (
-        <Menu isOpen={isOpen} setIsOpen={setIsOpen} userName={userName} />
+        <Menu
+          isDarkMode={isDarkMode}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          userName={userName}
+        />
       )}
     </>
   );
