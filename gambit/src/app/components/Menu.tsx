@@ -53,9 +53,9 @@ const Menu: React.FC<MenuProps> = ({
         : [...prevIndices, index]
     );
     console.log(selections);
-    setSelections((prevVal) => ({
+    setSelections(() => ({
       ...selections,
-      [menuItems[index].name]: !prevVal,
+      [menuItems[index].name]: selectedIndices.includes(index),
     }));
   };
 
