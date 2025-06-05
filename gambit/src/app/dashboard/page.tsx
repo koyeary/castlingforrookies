@@ -44,6 +44,7 @@ const Dashboard: React.FC = () => {
       <CssBaseline />
       <div className="app-container">
         <Navbar
+          title="Dashboard"
           user={{ userName: "Guest", isLoggedIn: true }}
           DarkModeSwitch={DarkModeSwitch}
           isDarkMode={mode === "dark"}

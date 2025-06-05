@@ -20,6 +20,7 @@ interface User {
 interface NavbarProps {
   user: User;
   DarkModeSwitch?: React.ReactNode;
+  title?: string;
   isDarkMode: boolean;
 }
 
@@ -27,6 +28,7 @@ const Navbar: React.FC<NavbarProps> = ({
   user,
   DarkModeSwitch,
   isDarkMode,
+  title,
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const router = useRouter();
@@ -63,6 +65,7 @@ const Navbar: React.FC<NavbarProps> = ({
                   </IconButton>
                 </Tooltip>
                 <Divider orientation="vertical" flexItem />
+                {title && <h1>{title}</h1>}
               </div>
               <div className="nav-group">
                 <Tooltip title="Home">
