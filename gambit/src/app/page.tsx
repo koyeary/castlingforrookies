@@ -1,15 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import {
-  ThemeProvider,
-  createTheme,
-  CssBaseline,
-  /*   FormControlLabel,
-  Switch, */
-} from "@mui/material";
-/* import ModeNightIcon from "@mui/icons-material/ModeNight";
-import LightModeIcon from "@mui/icons-material/LightMode"; */
+import React from "react";
+import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 
 import Navbar from "./components/Navbar";
 import TitleAnimation from "./components/Animations/TitleAnimation";
