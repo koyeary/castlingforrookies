@@ -49,6 +49,7 @@ const Page: React.FC = () => {
     <ThemeProvider theme={mode === "dark" ? darkTheme : lightTheme}>
       <CssBaseline />
       <div className="app-container">
+        {/*         <div className="chess"></div> */}
         <Navbar
           user={{ userName: "Guest", isLoggedIn: true }}
           DarkModeSwitch={DarkModeSwitch}

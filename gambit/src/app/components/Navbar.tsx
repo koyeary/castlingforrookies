@@ -89,11 +89,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, DarkModeSwitch }) => {
                     aria-label="log out"
                     onClick={handleLogout}
                   >
-                    <LogoutRoundedIcon
-                      className="nav-icon"
-                      /* style={{ marginLeft: 20, cursor: "pointer" }} */
-                      // onClick={handleLogout}
-                    />
+                    <LogoutRoundedIcon className="nav-icon" />
                   </IconButton>
                 </Tooltip>
                 <Divider orientation="vertical" flexItem />
