@@ -14,7 +14,7 @@ const BylineAnimation = () => {
 
   return (
     <div>
-      <h2 style={{ display: "flex", flexDirection: "row", gap: 5 }}>
+      <h2 className="byline-animation-container">
         {trail.map((style, index) => (
           <a.span key={index} style={style}>
             {byline[index]}

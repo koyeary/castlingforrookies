@@ -25,3 +25,9 @@ nav {
 .nav-icon {
   font-size: 2.25rem;
 }
+
+.byline-animation-container {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}

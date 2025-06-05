@@ -19,14 +19,13 @@ interface User {
 
 interface NavbarProps {
   user: User;
-  DarkModeSwitch: React.ReactNode;
+  DarkModeSwitch?: React.ReactNode;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ user, DarkModeSwitch }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const router = useRouter();
 
-  //const { DarkModeSwitch } = useDarkMode();
   const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     redirect("/");
@@ -90,15 +89,11 @@ const Navbar: React.FC<NavbarProps> = ({ user, DarkModeSwitch }) => {
                     aria-label="log out"
                     onClick={handleLogout}
                   >
-                    <LogoutRoundedIcon
-                      className="nav-icon"
-                      /* style={{ marginLeft: 20, cursor: "pointer" }} */
-                      // onClick={handleLogout}
-                    />
+                    <LogoutRoundedIcon className="nav-icon" />
                   </IconButton>
                 </Tooltip>
                 <Divider orientation="vertical" flexItem />
-                {DarkModeSwitch}
+                {DarkModeSwitch && DarkModeSwitch}
               </div>
             </>
           ) : (
