@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import ModeNightIcon from "@mui/icons-material/ModeNight";
 import LightModeIcon from "@mui/icons-material/LightMode";
+import DashboardComponents from "../components/Dashboard";
+import { MenuSelectProvider } from "../contexts/MenuSelectContext";
 
 const darkTheme = createTheme({ palette: { mode: "dark" } });
 const lightTheme = createTheme({ palette: { mode: "light" } });
@@ -40,18 +42,22 @@ const Dashboard: React.FC = () => {
     />
   );
   return (
-    <ThemeProvider theme={mode === "dark" ? darkTheme : lightTheme}>
-      <CssBaseline />
-      <div className="app-container">
-        <Navbar
-          title="Dashboard"
-          user={{ userName: "Guest", isLoggedIn: true }}
-          DarkModeSwitch={DarkModeSwitch}
-          isDarkMode={mode === "dark"}
-        />
-        <main className="centered-content"></main>
-      </div>
-    </ThemeProvider>
+    <MenuSelectProvider>
+      <ThemeProvider theme={mode === "dark" ? darkTheme : lightTheme}>
+        <CssBaseline />
+        <div className="app-container">
+          <Navbar
+            title="Dashboard"
+            user={{ userName: "Guest", isLoggedIn: true }}
+            DarkModeSwitch={DarkModeSwitch}
+            isDarkMode={mode === "dark"}
+          />
+          <main className="centered-content">
+            <DashboardComponents />
+          </main>
+        </div>
+      </ThemeProvider>
+    </MenuSelectProvider>
   );
 };
 
