@@ -1,35 +1,56 @@
-import React, {
-  createContext,
-  useState,
-  ReactNode,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import React, { createContext, useState, ReactNode, JSX } from "react";
 
-interface Selections {
-  analysis: boolean;
-  forex: boolean;
-  intel: boolean;
-  markets: boolean;
-  portfolio: boolean;
+import {
+  BarChart as BarChartIcon,
+  CurrencyExchange as CurrencyExchangeIcon,
+  DonutSmall as DonutSmallIcon,
+  LineAxis as LineAxisIcon,
+  Newspaper as NewspaperIcon,
+} from "@mui/icons-material";
+
+interface Selection {
+  name: string;
+  text: string;
+  icon: JSX.Element;
+  selected: boolean;
 }
+
+type Selections = Selection[];
+
+const menuItems = [
+  {
+    name: "analysis",
+    text: "Analysis",
+    icon: <BarChartIcon />,
+    selected: true,
+  },
+  {
+    name: "forex",
+    text: "ForEx",
+    icon: <CurrencyExchangeIcon />,
+    selected: true,
+  },
+  { name: "intel", text: "Intel", icon: <NewspaperIcon />, selected: true },
+  { name: "markets", text: "Markets", icon: <LineAxisIcon />, selected: true },
+  {
+    name: "portfolio",
+    text: "My Portfolio",
+    icon: <DonutSmallIcon />,
+    selected: true,
+  },
+];
 
 interface MenuSelectContextType {
+  menuItems: typeof menuItems;
   selections: Selections;
-  setSelections: Dispatch<SetStateAction<Selections>>;
+  handleSelect: (item: Selection) => void;
 }
 
-const defaultSelections: Selections = {
-  analysis: true,
-  forex: true,
-  intel: true,
-  markets: true,
-  portfolio: true,
-};
-
-const MenuSelectContext = createContext<MenuSelectContextType | undefined>(
-  undefined
-);
+const MenuSelectContext = createContext<MenuSelectContextType>({
+  menuItems: menuItems,
+  selections: [],
+  handleSelect: () => {},
+});
 
 interface MenuSelectProviderProps {
   children: ReactNode;
@@ -38,10 +59,24 @@ interface MenuSelectProviderProps {
 export const MenuSelectProvider: React.FC<MenuSelectProviderProps> = ({
   children,
 }) => {
-  const [selections, setSelections] = useState<Selections>(defaultSelections);
+  const [selections, setSelections] = useState<Selections>(menuItems);
+
+  const handleSelect = (item: Selection): void => {
+    console.log("clicked", item.name);
+
+    setSelections((prevSelections) => {
+      const updatedSelections = prevSelections.map((selection) =>
+        selection.name === item.name
+          ? { ...selection, selected: !selection.selected }
+          : selection
+      );
+      console.log("Updated selections:", updatedSelections);
+      return updatedSelections;
+    });
+  };
 
   return (
-    <MenuSelectContext.Provider value={{ selections, setSelections }}>
+    <MenuSelectContext.Provider value={{ menuItems, selections, handleSelect }}>
       {children}
     </MenuSelectContext.Provider>
   );

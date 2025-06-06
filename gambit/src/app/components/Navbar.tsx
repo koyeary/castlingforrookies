@@ -30,7 +30,7 @@ const Navbar: React.FC<NavbarProps> = ({
   isDarkMode,
   title,
 }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
   const router = useRouter();
 
   const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -43,7 +43,7 @@ const Navbar: React.FC<NavbarProps> = ({
   };
 
   const toggleDrawer = () => {
-    setIsOpen(!isOpen);
+    setOpen(!open);
   };
 
   const { userName } = user;
@@ -126,8 +126,8 @@ const Navbar: React.FC<NavbarProps> = ({
       {user.isLoggedIn && (
         <Menu
           isDarkMode={isDarkMode}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
+          open={open}
+          setOpen={setOpen}
           userName={userName}
         />
       )}

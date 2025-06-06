@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import {
   Drawer,
   List,
@@ -8,64 +8,27 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import {
-  ArrowBackIosNew as ArrowBackIosNewIcon,
-  BarChart as BarChartIcon,
-  CurrencyExchange as CurrencyExchangeIcon,
-  DonutSmall as DonutSmallIcon,
-  LineAxis as LineAxisIcon,
-  Newspaper as NewspaperIcon,
-} from "@mui/icons-material";
+import { ArrowBackIosNew as ArrowBackIosNewIcon } from "@mui/icons-material";
 import "./components.css";
 import useMenuSelect from "../hooks/useMenuSelect";
 
 interface MenuProps {
-  isOpen: boolean;
+  open: boolean;
   isDarkMode: boolean;
   userName: string;
-  setIsOpen: (isOpen: boolean) => void;
+  setOpen: (open: boolean) => void;
 }
 
-const Menu: React.FC<MenuProps> = ({
-  userName,
-  isOpen,
-  setIsOpen,
-  isDarkMode,
-}) => {
-  const [selectedIndices, setSelectedIndices] = useState<number[]>([
-    0, 1, 2, 3, 4,
-  ]);
+const Menu: React.FC<MenuProps> = ({ userName, open, setOpen, isDarkMode }) => {
+  const { menuItems, selections, handleSelect } = useMenuSelect();
 
-  const { selections, setSelections } = useMenuSelect();
-
-  const menuItems = [
-    { name: "analysis", text: "Analysis", icon: <BarChartIcon /> },
-    { name: "forex", text: "ForEx", icon: <CurrencyExchangeIcon /> },
-    { name: "intel", text: "Intel", icon: <NewspaperIcon /> },
-    { name: "markets", text: "Markets", icon: <LineAxisIcon /> },
-    { name: "portfolio", text: "My Portfolio", icon: <DonutSmallIcon /> },
-  ];
-
-  const handleSelect = (index: number) => {
-    setSelectedIndices((prevIndices) =>
-      prevIndices.includes(index)
-        ? prevIndices.filter((i) => i !== index)
-        : [...prevIndices, index]
-    );
-    console.log(selections);
-    setSelections(() => ({
-      ...selections,
-      [menuItems[index].name]: selectedIndices.includes(index),
-    }));
-  };
-
-  const handleClose = () => setIsOpen(false);
+  const handleClose = () => setOpen(false);
 
   return (
     <Drawer
       anchor="left"
       variant="persistent"
-      open={isOpen}
+      open={open}
       onClose={handleClose}
       elevation={16}
       sx={{
@@ -85,10 +48,10 @@ const Menu: React.FC<MenuProps> = ({
         sx={{ display: "flex", flexDirection: "column", width: "100%" }}
       >
         {menuItems.map((item, index) => (
-          <ListItem key={index} disableGutters>
+          <ListItem key={item.name} disableGutters>
             <ListItemButton
-              selected={selectedIndices.includes(index)}
-              onClick={() => handleSelect(index)}
+              selected={selections[index].selected}
+              onClick={() => handleSelect(item)}
             >
               <ListItemIcon sx={{ marginRight: 1 }}>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
