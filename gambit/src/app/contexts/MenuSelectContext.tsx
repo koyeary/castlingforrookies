@@ -62,8 +62,6 @@ export const MenuSelectProvider: React.FC<MenuSelectProviderProps> = ({
   const [selections, setSelections] = useState<Selections>(menuItems);
 
   const handleSelect = (item: Selection): void => {
-    console.log("clicked", item.name);
-
     setSelections((prevSelections) => {
       const updatedSelections = prevSelections.map((selection) =>
         selection.name === item.name
