@@ -48,7 +48,7 @@ const Dashboard: React.FC = () => {
         <div className="app-container">
           <Navbar
             title="Dashboard"
-            user={{ userName: "Guest", isLoggedIn: true }}
+            user={{ userName: "Diva", isLoggedIn: true }}
             DarkModeSwitch={DarkModeSwitch}
             isDarkMode={mode === "dark"}
           />
