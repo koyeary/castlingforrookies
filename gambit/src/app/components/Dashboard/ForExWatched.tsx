@@ -24,7 +24,8 @@ import {
   // TableSortLabel,
   //Select,
 } from "@mui/material";
-import { LineChart } from "@mui/x-charts/LineChart";
+//import { LineChart } from "@mui/x-charts/LineChart";
+import Candlesticks from "./Candlesticks";
 
 const ForExWatched: React.FC = () => {
   const columns = ["Currency", "Open", "High", "Low", "Close"];
@@ -90,21 +91,8 @@ const ForExWatched: React.FC = () => {
   }, []);
 
   const fetchRates = async () => {
-    const userRatePromises = await findMultipleCurrencies();
-    const resolvedRates = (await Promise.all(userRatePromises)) as {
-      base: string;
-      quote: string;
-      rate: { open: number; high: number; low: number; close: number };
-    }[];
-    const formattedRates = resolvedRates.map((rate) => ({
-      quote: rate.quote,
-      base: rate.base,
-      open: rate.rate.open,
-      high: rate.rate.high,
-      low: rate.rate.low,
-      close: rate.rate.close,
-    }));
-    setRates(formattedRates);
+    const latestRates = await findMultipleCurrencies();
+    setRates(latestRates);
   };
 
   /*   const fetchUserRates = async (userRates: string[]) => {
@@ -128,7 +116,7 @@ const ForExWatched: React.FC = () => {
   const margin = { right: 24 };
   const xLabels = ["Open", "High", "Low", "Close"];
 
-  const SimpleLineChart = () => {
+  /*   const SimpleLineChart = () => {
     console.log(rates);
 
     const formattedData = rates.map((rate) => ({
@@ -144,7 +132,7 @@ const ForExWatched: React.FC = () => {
         margin={margin}
       />
     );
-  };
+  }; */
 
   return (
     <div
@@ -156,7 +144,8 @@ const ForExWatched: React.FC = () => {
       }}
     >
       <ForExLatest />
-      <SimpleLineChart />
+      <Candlesticks rates={rates} />
+      {/*  <SimpleLineChart /> */}
       <Card
         raised
         style={{ width: "fit-content", height: 400, maxHeight: "fit-content" }}

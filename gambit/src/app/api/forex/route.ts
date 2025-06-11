@@ -101,14 +101,48 @@ export const findCurrenciesBySymbol = async (symbol: string) => {
   }
 };
 
+//until user flower is set up
 const currencies = ["EUR", "CAD", "CHF"];
-export const findMultipleCurrencies = () => {
-  const all = [];
+export const findMultipleCurrencies = async () => {
+  const data = [];
+
   for (let i = 0; i < currencies.length; i++) {
     const cur = currencies[i];
-    const data = findCurrenciesBySymbol(cur);
-    all.push(data);
+    const rate = await findCurrenciesBySymbol(cur);
+    data.push(rate);
   }
 
-  return all;
+  const resolvedRates = data as {
+    base: string;
+    quote: string;
+    rate: { open: number; high: number; low: number; close: number };
+  }[];
+
+  const formattedData = resolvedRates.map((rate) => ({
+    quote: rate.quote,
+    base: rate.base,
+    open: Math.round(rate.rate.open * 100) / 100,
+    high: Math.round(rate.rate.high * 100) / 100,
+    low: Math.round(rate.rate.low * 100) / 100,
+    close: Math.round(rate.rate.close * 100) / 100,
+  }));
+  // const
+  console.log(formattedData);
+  return formattedData;
 };
+/* 
+
+    const multipleCurrencies = await findMultipleCurrencies();
+    const resolvedRates = (await Promise.all(multipleCurrencies)) as {
+      base: string;
+      quote: string;
+      rate: { open: number; high: number; low: number; close: number };
+    }[];
+    const formattedRates = resolvedRates.map((rate) => ({
+      quote: rate.quote,
+      base: rate.base,
+      open: Math.round(rate.rate.open * 100) / 100,
+      high: Math.round(rate.rate.high * 100) / 100,
+      low: Math.round(rate.rate.low * 100) / 100,
+      close: Math.round(rate.rate.close * 100) / 100,
+    })); */
