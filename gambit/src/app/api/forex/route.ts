@@ -130,19 +130,3 @@ export const findMultipleCurrencies = async () => {
   console.log(formattedData);
   return formattedData;
 };
-/* 
-
-    const multipleCurrencies = await findMultipleCurrencies();
-    const resolvedRates = (await Promise.all(multipleCurrencies)) as {
-      base: string;
-      quote: string;
-      rate: { open: number; high: number; low: number; close: number };
-    }[];
-    const formattedRates = resolvedRates.map((rate) => ({
-      quote: rate.quote,
-      base: rate.base,
-      open: Math.round(rate.rate.open * 100) / 100,
-      high: Math.round(rate.rate.high * 100) / 100,
-      low: Math.round(rate.rate.low * 100) / 100,
-      close: Math.round(rate.rate.close * 100) / 100,
-    })); */

@@ -4,28 +4,27 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 
-interface Data {
+interface Rate {
   base: string;
   quote: string;
   open: number;
   high: number;
-  close: number;
   low: number;
+  close: number;
 }
 
 interface CandlesticksProps {
-  rates: Data[];
+  rates: Rate[];
 }
 
-export default function Candlesticks({ rates }: CandlesticksProps) {
+const Candlesticks: React.FC<CandlesticksProps> = ({ rates }) => {
   const [layout, setLayout] = React.useState<"horizontal" | "vertical">(
     "vertical"
   );
   const [series, setSeries] = React.useState<object[]>([]);
-  const [dataset, setDataset] = React.useState<
-    { open: number; high: number; low: number; close: number; quote: string }[]
-  >([]);
+
   /* 
+
 const dataset = [
   [3, -7, 'First'],
   [0, -5, 'Second'],
@@ -43,18 +42,10 @@ const dataset = [
       { dataKey: r.quote, label: r.quote, layout, stack: "stack" },
     ]);
     setSeries(arr);
-
-    console.log(rates);
-  };
-
-  const formatDataSet = () => {
-    setDataset(Object.values(rates));
-    console.log(Object.values(rates));
   };
 
   React.useEffect(() => {
     formatSeries();
-    formatDataSet();
   }, []);
 
   return (
@@ -75,14 +66,21 @@ const dataset = [
       </Stack>
       <BarChart
         series={series}
-        dataset={dataset}
+        dataset={rates.map((rate) => ({
+          base: rate.base,
+          quote: rate.quote,
+          open: rate.open,
+          high: rate.high,
+          close: rate.close,
+          low: rate.low,
+        }))}
         /*         {...(layout === "vertical"
           ? chartSettingsV(dataset)
           : chartSettingsH(dataset))} */
       />
     </Stack>
   );
-}
+};
 
 /* const chartSettingsH: Partial<BarChartProps> = ({
   dataset,
@@ -100,3 +98,5 @@ const dataset = [
   xAxis: [{ dataKey: "order" }],
   yAxis: undefined,
 }); */
+
+export default Candlesticks;
