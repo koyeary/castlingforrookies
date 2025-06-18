@@ -90,9 +90,9 @@ export const findCurrenciesBySymbol = async (symbol: string) => {
     );
 
     const data = await req.json();
-
-    const { base, quote, rate } = data;
-    const userRate = { base, quote, rate };
+    console.log(data);
+    const { base, quote, timestamp, rate } = data;
+    const userRate = { base, quote, timestamp, rate };
 
     return userRate;
   } catch (err) {
@@ -102,7 +102,19 @@ export const findCurrenciesBySymbol = async (symbol: string) => {
 };
 
 //until user flower is set up
-const currencies = ["EUR", "CAD", "CHF"];
+const currencies = [
+  "EUR",
+  "CAD",
+  "CHF",
+  "GBP",
+  "JPY",
+  "AUD",
+  "NZD",
+  "CNY",
+  "INR",
+  "ZAR",
+];
+
 export const findMultipleCurrencies = async () => {
   const data = [];
 
@@ -116,15 +128,18 @@ export const findMultipleCurrencies = async () => {
     base: string;
     quote: string;
     rate: { open: number; high: number; low: number; close: number };
+    timestamp: number;
   }[];
 
+  console.log(resolvedRates[0].rate);
   const formattedData = resolvedRates.map((rate) => ({
     quote: rate.quote,
     base: rate.base,
-    open: Math.round(rate.rate.open * 100) / 100,
-    high: Math.round(rate.rate.high * 100) / 100,
-    low: Math.round(rate.rate.low * 100) / 100,
-    close: Math.round(rate.rate.close * 100) / 100,
+    open: rate.rate.open,
+    high: rate.rate.high,
+    low: rate.rate.low,
+    close: rate.rate.close,
+    timestamp: rate.timestamp,
   }));
   // const
   console.log(formattedData);

@@ -1,24 +1,16 @@
 "use client";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ForExLatest from "./ForExLatest";
-import { BarChart } from "@mui/x-charts/BarChart";
+import { findMultipleCurrencies } from "@/app/api/forex/route";
 import {
-  // Button,
-  //ButtonGroup,
-  /*   FormControl,
-  InputLabel,
-  MenuItem, */
   Card,
   Table,
   TableHead,
   TableCell,
   TableBody,
   TableRow,
-  //TextField,
-  // TableSortLabel,
-  //Select,
 } from "@mui/material";
-//import Candlesticks from "./Candlesticks";
+import CandleSticks from "./Candlesticks";
 
 interface Rate {
   base: string;
@@ -27,49 +19,39 @@ interface Rate {
   high: number;
   low: number;
   close: number;
+  timestamp: number;
 }
 
-interface ForExWatchedProps {
-  rates: Rate[];
-}
+const ForExWatched: React.FC = () => {
+  const [rates, setRates] = useState<Rate[]>([]);
 
-const ForExWatched: React.FC<ForExWatchedProps> = ({ rates }) => {
-  const [layout, setLayout] = React.useState<"horizontal" | "vertical">(
-    "vertical"
-  );
+  const getLatestRates = useCallback(async () => {
+    const latest = await findMultipleCurrencies();
+    setRates(latest);
+  }, []);
 
-  const dataset = [
-    [rates[0].open, rates[0].high, rates[0].low, rates[0].close, "First"],
-    [rates[1].open, rates[1].high, rates[1].low, rates[1].close, "Second"],
+  useEffect(() => {
+    getLatestRates();
+  }, [getLatestRates]);
 
-    [rates[2].open, rates[2].high, rates[2].low, rates[2].close, "Third"],
+  /*   const data = rates.map((r) => {
+    return {
+      x: r.quote,
+      y: [r.open, r.high, r.low, r.close],
+    };
+  }); */
 
-    [rates[2].open, rates[2].high, rates[2].low, rates[2].close, "Fourth"],
-  ].map(([open, high, low, close, order]) => ({
-    open,
-    high,
-    low,
-    close,
-    order,
-  }));
-
-  const chartSettingsH: Partial<BarChartProps> = {
-    dataset,
-    height: 300,
-    yAxis: [{ scaleType: "band", dataKey: "order" }],
-    slotProps: {
-      legend: {
-        direction: "horizontal",
-        position: { vertical: "bottom", horizontal: "center" },
-      },
-    },
-  };
-
-  const chartSettingsV: Partial<BarChartProps> = {
-    ...chartSettingsH,
-    xAxis: [{ dataKey: "order" }],
-    yAxis: undefined,
-  };
+  /* 
+    return (
+      <div /* style={{ color: "#FFF" }} >
+        <Chart
+          options={options}
+          series={series}
+          type="candlestick"
+          height={350}
+        />
+      </div>
+    ); */
 
   const columns = ["Currency", "Open", "High", "Low", "Close"];
   return (
@@ -81,18 +63,9 @@ const ForExWatched: React.FC<ForExWatchedProps> = ({ rates }) => {
         width: "100%",
       }}
     >
-      <ForExLatest />
-      {/* <Candlesticks rates={rates} /> */}
-      <BarChart
-        series={[
-          { dataKey: "open", label: "Open", layout, stack: "stack" },
-          { dataKey: "high", label: "High", layout, stack: "stack" },
-          { dataKey: "low", label: "Low", layout, stack: "stack" },
-          { dataKey: "close", label: "Close", layout, stack: "stack" },
-        ]}
-        {...(layout === "vertical" ? chartSettingsV : chartSettingsH)}
-      />
-      <Card
+      {/*     <ForExLatest /> */}
+      <CandleSticks rates={rates} />
+      {/*  <Card
         raised
         style={{ width: "fit-content", height: 400, maxHeight: "fit-content" }}
         sx={{
@@ -118,16 +91,16 @@ const ForExWatched: React.FC<ForExWatchedProps> = ({ rates }) => {
               {rates.map((r) => (
                 <TableRow key={r.quote}>
                   <TableCell>{r.quote}</TableCell>
-                  <TableCell>{r.open}</TableCell>
-                  <TableCell>{r.high}</TableCell>
-                  <TableCell>{r.low}</TableCell>
-                  <TableCell>{r.close}</TableCell>
+                  <TableCell>{Math.round(r.open * 100) / 100}</TableCell>
+                  <TableCell>{Math.round(r.high * 100) / 100}</TableCell>
+                  <TableCell>{Math.round(r.low * 100) / 100}</TableCell>
+                  <TableCell>{Math.round(r.close * 100) / 100}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </div>
-      </Card>
+      </Card> */}
     </div>
   );
 };

@@ -1,8 +1,12 @@
-import * as React from "react";
-import { BarChart } from "@mui/x-charts/BarChart";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
+import React from "react";
+import ReactApexChart from "react-apexcharts";
+import { Card, CardContent, Typography } from "@mui/material";
+
+import { ApexOptions } from "apexcharts";
+
+interface CandleStickProps {
+  rates: Rate[];
+}
 
 interface Rate {
   base: string;
@@ -11,92 +15,57 @@ interface Rate {
   high: number;
   low: number;
   close: number;
+  timestamp: number;
 }
+const CandleSticks: React.FC<CandleStickProps> = ({ rates }) => {
+  const series = [
+    {
+      data: rates.map((r) => {
+        const high = Math.max(r.high, r.low);
+        const low = Math.min(r.high, r.low);
+        return {
+          x: r.quote, // Also more readable than `r.quote`
+          y: [r.open, high, low, r.close],
+        };
+      }),
+    },
+  ];
 
-interface CandlesticksProps {
-  rates: Rate[];
-}
-
-const Candlesticks: React.FC<CandlesticksProps> = ({ rates }) => {
-  const [layout, setLayout] = React.useState<"horizontal" | "vertical">(
-    "vertical"
-  );
-  const [series, setSeries] = React.useState<object[]>([]);
-
-  /* 
-
-const dataset = [
-  [3, -7, 'First'],
-  [0, -5, 'Second'],
-  [10, 0, 'Third'],
-  [9, 6, 'Fourth'],
-].map(([high, low, order]) => ({
-  high,
-  low,
-  order,
-})); */
-
-  const formatSeries = () => {
-    const arr = Object.values(rates).map((r) => [
-      ...series,
-      { dataKey: r.quote, label: r.quote, layout, stack: "stack" },
-    ]);
-    setSeries(arr);
+  const options: ApexOptions = {
+    chart: {
+      type: "candlestick",
+      height: 350,
+    },
+    title: {
+      text: "Candlestick Chart Example",
+      align: "left",
+    },
+    xaxis: {
+      type: "category",
+    },
+    yaxis: {
+      tooltip: {
+        enabled: true,
+      },
+      logarithmic: true,
+    },
   };
 
-  React.useEffect(() => {
-    formatSeries();
-  }, []);
-
   return (
-    <Stack direction="column" spacing={1} sx={{ width: "100%", maxWidth: 600 }}>
-      <Stack direction="row" spacing={4}>
-        <TextField
-          select
-          sx={{ minWidth: 150 }}
-          label="layout"
-          value={layout}
-          onChange={(event) =>
-            setLayout(event.target.value as "horizontal" | "vertical")
-          }
-        >
-          <MenuItem value="horizontal">Horizontal</MenuItem>
-          <MenuItem value="vertical">Vertical</MenuItem>
-        </TextField>
-      </Stack>
-      <BarChart
-        series={series}
-        dataset={rates.map((rate) => ({
-          base: rate.base,
-          quote: rate.quote,
-          open: rate.open,
-          high: rate.high,
-          close: rate.close,
-          low: rate.low,
-        }))}
-        /*         {...(layout === "vertical"
-          ? chartSettingsV(dataset)
-          : chartSettingsH(dataset))} */
-      />
-    </Stack>
+    <Card
+      sx={{ borderRadius: 4, padding: 2, overflow: "auto", width: "100vw" }}
+    >
+      <CardContent>
+        <Typography variant="h6">24 Hours</Typography>
+        <ReactApexChart
+          options={options}
+          series={series}
+          type="candlestick"
+          height={350}
+        />
+      </CardContent>
+    </Card>
   );
 };
 
-/* const chartSettingsH: Partial<BarChartProps> = ({
-  dataset,
-  height: 300,
-  yAxis: [{ scaleType: 'band', dataKey: 'order' }],
-  slotProps: {
-    legend: {
-      direction: 'horizontal',
-      position: { vertical: 'bottom', horizontal: 'center' },
-    },
-  },
-}); */
-/* const chartSettingsV: Partial<BarChartProps> = ({
-  ...chartSettingsH(dataset),
-  xAxis: [{ dataKey: "order" }],
-  yAxis: undefined,
-}); */
-
-export default Candlesticks;
+export default CandleSticks;
