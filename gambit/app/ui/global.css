@@ -1,0 +1,33 @@
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.centered-content {
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+}
+
+.title-animation-container {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  margin: auto;
+  gap: 10px;
+}
