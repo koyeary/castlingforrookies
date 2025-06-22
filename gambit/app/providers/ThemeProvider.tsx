@@ -55,11 +55,7 @@ export const ThemeSwitch = () => {
   );
 };
 
-export default function ThemeRegistry({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const ThemeRegistry = ({ children }: { children: React.ReactNode }) => {
   const [mode, setMode] = useState<ThemeMode>("dark");
 
   const toggleDarkMode = () =>
@@ -75,4 +71,6 @@ export default function ThemeRegistry({
       </ThemeProvider>
     </ThemeContext.Provider>
   );
-}
+};
+
+export default ThemeRegistry;

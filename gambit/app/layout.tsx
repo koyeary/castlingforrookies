@@ -3,10 +3,12 @@ import type { Metadata } from "next";
 import Navbar from "./components/Navbar";
 import ThemeRegistry from "./providers/ThemeProvider";
 import "@/app/ui/global.css";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Gambit",
-  description: "Learn to short-sell currencies and stocks with Gambit",
+  description:
+    "Learn about the ForEx market and how to short-sell currencies with Gambit",
 };
 
 export default function RootLayout({
@@ -20,12 +22,14 @@ export default function RootLayout({
       style={{ transitionProperty: "none", marginRight: "0px" }}
     >
       <body>
-        <ThemeRegistry>
-          <Navbar user={{ userName: "", isLoggedIn: true }} />
-          <main className="app-container">
-            <div className="centered-content">{children}</div>
-          </main>
-        </ThemeRegistry>
+        <SessionProvider>
+          <ThemeRegistry>
+            <Navbar user={{ userName: "", isLoggedIn: true }} />
+            <main className="app-container">
+              <div className="centered-content">{children}</div>
+            </main>
+          </ThemeRegistry>
+        </SessionProvider>
       </body>
     </html>
   );

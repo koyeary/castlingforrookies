@@ -19,7 +19,7 @@ interface User {
 
 interface NavbarProps {
   user: User;
-  title?: string; // Optional page title for Navbar to match html title (to do)
+  title?: string; // page title for Navbar to match html title (to do)
 }
 
 const Navbar: React.FC<NavbarProps> = ({ user, title }) => {
@@ -41,8 +41,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, title }) => {
           <div className="nav-group">
             <Divider orientation="vertical" flexItem />
             {title && <h1>{title}</h1>}
-          </div>
-          <div className="nav-group">
+
             <Tooltip title="Home">
               <IconButton
                 edge="start"
@@ -76,7 +75,6 @@ const Navbar: React.FC<NavbarProps> = ({ user, title }) => {
               </IconButton>
             </Tooltip>
             <Divider orientation="vertical" flexItem />
-            <ThemeSwitch />
           </div>
         </>
       ) : (
@@ -98,10 +96,11 @@ const Navbar: React.FC<NavbarProps> = ({ user, title }) => {
             >
               Login
             </Button>
+            {/*       <ThemeSwitch /> */}
           </div>
-          <ThemeSwitch />
         </>
       )}
+      <ThemeSwitch />
     </nav>
   );
 };

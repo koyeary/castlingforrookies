@@ -1,18 +1,37 @@
 "use client";
-import React from "react";
-/* import { FormEvent } from "react";
-import { useRouter } from "next/navigation"; */
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { login } from "@/app/actions/auth";
+import "./styles.css";
 
 const Auth: React.FC = () => {
-  /*   const router = useRouter();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [pending, setPending] = useState(false);
+  const { status } = useSession();
+  const router = useRouter();
 
-  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setPending(true);
 
-    router.push("/dashboard");
-  }; */
+    try {
+      await login({ username, password }, setPending);
+      router.push("/dashboard");
+    } catch (error) {
+      console.error("Login error:", error);
+      setErrorMessage("An error occurred during login");
+      setPending(false);
+    }
+  };
 
-  return <div>Login</div>;
+  return (
+    <div className="auth-container">
+      <button onClick={handleSubmit}>Login</button>
+    </div>
+  );
 };
 
 export default Auth;
