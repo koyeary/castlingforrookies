@@ -22,14 +22,14 @@ export default function RootLayout({
       style={{ transitionProperty: "none", marginRight: "0px" }}
     >
       <body>
-        <ThemeRegistry>
-          <UserProvider>
+        <UserProvider>
+          <ThemeRegistry>
             <Navbar />
             <main className="app-container">
               <div className="centered-content">{children}</div>
             </main>
-          </UserProvider>
-        </ThemeRegistry>
+          </ThemeRegistry>
+        </UserProvider>
       </body>
     </html>
   );
