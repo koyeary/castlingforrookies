@@ -35,78 +35,74 @@ const Navbar: React.FC<NavbarProps> = ({ user, title }) => {
   };
 
   return (
-    <>
-      <header>
-        <nav>
-          {user.isLoggedIn ? (
-            <>
-              <div className="nav-group">
-                <Divider orientation="vertical" flexItem />
-                {title && <h1>{title}</h1>}
-              </div>
-              <div className="nav-group">
-                <Tooltip title="Home">
-                  <IconButton
-                    edge="start"
-                    color="inherit"
-                    aria-label="home"
-                    //onClick={toggleDrawer}
-                  >
-                    <HomeFilledIcon className="nav-icon" />
-                  </IconButton>
-                </Tooltip>
-                <Divider orientation="vertical" flexItem />
-                <Tooltip title="Dashboard">
-                  <IconButton
-                    edge="start"
-                    color="inherit"
-                    aria-label="dashboard"
-                    //onClick={toggleDrawer}
-                  >
-                    <DashboardIcon className="nav-icon" />
-                  </IconButton>
-                </Tooltip>
-                <Divider orientation="vertical" flexItem />
-                <Tooltip title="Log out">
-                  <IconButton
-                    edge="start"
-                    color="inherit"
-                    aria-label="log out"
-                    onClick={handleLogout}
-                  >
-                    <LogoutRoundedIcon className="nav-icon" />
-                  </IconButton>
-                </Tooltip>
-                <Divider orientation="vertical" flexItem />
-                <ThemeSwitch />
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="nav-group">
-                <Button
-                  variant="outlined"
-                  sx={{
-                    color: "white",
-                    borderColor: "white",
-                    "&:hover": {
-                      borderRadius: "8px",
-                      borderColor: "white",
-                      backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    },
-                  }}
-                  startIcon={<AccountCircleRoundedIcon />}
-                  onClick={handleLogin}
-                >
-                  Login
-                </Button>
-              </div>
-              <ThemeSwitch />
-            </>
-          )}
-        </nav>
-      </header>
-    </>
+    <nav>
+      {user.isLoggedIn ? (
+        <>
+          <div className="nav-group">
+            <Divider orientation="vertical" flexItem />
+            {title && <h1>{title}</h1>}
+          </div>
+          <div className="nav-group">
+            <Tooltip title="Home">
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="home"
+                //onClick={toggleDrawer}
+              >
+                <HomeFilledIcon className="nav-icon" />
+              </IconButton>
+            </Tooltip>
+            <Divider orientation="vertical" flexItem />
+            <Tooltip title="Dashboard">
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="dashboard"
+                //onClick={toggleDrawer}
+              >
+                <DashboardIcon className="nav-icon" />
+              </IconButton>
+            </Tooltip>
+            <Divider orientation="vertical" flexItem />
+            <Tooltip title="Log out">
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="log out"
+                onClick={handleLogout}
+              >
+                <LogoutRoundedIcon className="nav-icon" />
+              </IconButton>
+            </Tooltip>
+            <Divider orientation="vertical" flexItem />
+            <ThemeSwitch />
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="nav-group">
+            <Button
+              variant="outlined"
+              sx={{
+                color: "white",
+                borderColor: "white",
+                "&:hover": {
+                  borderRadius: "8px",
+                  borderColor: "white",
+                  backgroundColor: "rgba(255, 255, 255, 0.1)",
+                },
+              }}
+              startIcon={<AccountCircleRoundedIcon />}
+              onClick={handleLogin}
+            >
+              Login
+            </Button>
+          </div>
+          <ThemeSwitch />
+        </>
+      )}
+    </nav>
   );
 };
 

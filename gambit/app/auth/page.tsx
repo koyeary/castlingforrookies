@@ -1,23 +1,18 @@
 "use client";
-import { FormEvent } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
+/* import { FormEvent } from "react";
+import { useRouter } from "next/navigation"; */
 
 const Auth: React.FC = () => {
-  const router = useRouter();
+  /*   const router = useRouter();
 
-  async function handleLogin(event: FormEvent<HTMLFormElement>) {
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Here you would typically handle the login logic, e.g., API call
-    // For now, we'll just redirect to the dashboard
-    router.push("/dashboard");
-  }
 
-  return (
-    <form onSubmit={handleLogin}>
-      Login
-      <button type="submit">Login</button>
-    </form>
-  );
+    router.push("/dashboard");
+  }; */
+
+  return <div>Login</div>;
 };
 
 export default Auth;

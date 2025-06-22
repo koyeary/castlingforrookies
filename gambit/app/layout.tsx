@@ -19,14 +19,14 @@ export default function RootLayout({
       lang="en-US"
       style={{ transitionProperty: "none", marginRight: "0px" }}
     >
-      <ThemeRegistry>
-        <body>
+      <body>
+        <ThemeRegistry>
           <Navbar user={{ userName: "", isLoggedIn: true }} />
           <main className="app-container">
             <div className="centered-content">{children}</div>
           </main>
-        </body>
-      </ThemeRegistry>
+        </ThemeRegistry>
+      </body>
     </html>
   );
 }
