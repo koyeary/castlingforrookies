@@ -4,7 +4,9 @@ Gambit is an in-progress browser and Progressive Web Application that aims to de
 
 We're only just beginning. This application is continually deployed to show most recent code, and so may be subject to downtime and errors as development continues.
 
-If the app is up and running, you can take a look at it here: "".
+If the app is up and running, you can take a look at it here: [on my heroku].
+
+If not, see below under Instructions.
 
 ### Current To-Do
 
@@ -12,9 +14,11 @@ If the app is up and running, you can take a look at it here: "".
 - complete user authentication flow by connecting user database
 - reconnect user dashboard components to completed forex logic
 
-## Getting Started
+## Instructions
 
-First, run the development server:
+Clone the repository from https://github.com/koyeary/castlingforrookies.git.
+
+Then, run the development server:
 
 ```bash
 npm run dev
