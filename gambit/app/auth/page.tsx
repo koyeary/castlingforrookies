@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
-//import { login } from "@/app/actions/auth";
 import { TextField } from "@mui/material";
 import "./styles.css";
 
@@ -15,11 +14,12 @@ const Auth: React.FC = () => {
   const { username, password } = formData;
   const [errorMessage, setErrorMessage] = useState("");
   const [pending, setPending] = useState(false);
-  const { status } = useSession();
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    console.log("Form data updated:", formData);
   };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -53,7 +53,7 @@ const Auth: React.FC = () => {
       <form>
         {errorMessage.length > 0 ? <h2>{errorMessage}</h2> : <h2>Login</h2>}
         <TextField
-          name={username}
+          name="username"
           label="Username"
           variant="outlined"
           value={username}
@@ -62,7 +62,7 @@ const Auth: React.FC = () => {
           margin="normal"
         />
         <TextField
-          name={password}
+          name="password"
           label="Password"
           type="password"
           variant="outlined"
@@ -73,7 +73,7 @@ const Auth: React.FC = () => {
         />
       </form>
       <button onClick={handleSubmit} disabled={pending ? true : false}>
-        {pending ? status : "Login"}
+        {pending ? "Loading" : "Login"}
       </button>
     </div>
   );

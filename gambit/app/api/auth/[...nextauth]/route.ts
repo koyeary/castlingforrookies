@@ -28,7 +28,6 @@ export const authOptions: NextAuthOptions = {
       },
 
       async authorize(credentials, req) {
-        // Include hidden values here
         const data = {
           username: credentials?.username ?? "",
           password: credentials?.password || "",
