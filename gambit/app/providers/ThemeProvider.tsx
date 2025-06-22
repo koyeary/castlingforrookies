@@ -42,6 +42,7 @@ export const ThemeSwitch = () => {
           onChange={toggleDarkMode}
           name="darkModeToggle"
           color="primary"
+          sx={{ marginRight: 0 }}
         />
       }
       label={

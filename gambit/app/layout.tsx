@@ -2,8 +2,8 @@ import React from "react";
 import type { Metadata } from "next";
 import Navbar from "./components/Navbar";
 import ThemeRegistry from "./providers/ThemeProvider";
+import UserProvider from "./providers/UserProvider";
 import "@/app/ui/global.css";
-import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Gambit",
@@ -22,14 +22,14 @@ export default function RootLayout({
       style={{ transitionProperty: "none", marginRight: "0px" }}
     >
       <body>
-        <SessionProvider>
-          <ThemeRegistry>
-            <Navbar user={{ userName: "", isLoggedIn: true }} />
+        <ThemeRegistry>
+          <UserProvider>
+            <Navbar />
             <main className="app-container">
               <div className="centered-content">{children}</div>
             </main>
-          </ThemeRegistry>
-        </SessionProvider>
+          </UserProvider>
+        </ThemeRegistry>
       </body>
     </html>
   );

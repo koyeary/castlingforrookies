@@ -27,7 +27,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/contexts/MenuSelectContext.tsx"
+    "src/app/contexts/MenuSelectContext.tsx",
+    "next-env.d.ts",
+    "types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

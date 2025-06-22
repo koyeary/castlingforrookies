@@ -1,25 +1,46 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { login } from "@/app/actions/auth";
+import { signIn, useSession } from "next-auth/react";
+//import { login } from "@/app/actions/auth";
+import { TextField } from "@mui/material";
 import "./styles.css";
 
 const Auth: React.FC = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const { username, password } = formData;
   const [errorMessage, setErrorMessage] = useState("");
   const [pending, setPending] = useState(false);
   const { status } = useSession();
   const router = useRouter();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setPending(true);
 
     try {
-      await login({ username, password }, setPending);
-      router.push("/dashboard");
+      const res = await signIn("credentials", {
+        redirect: true,
+        username,
+        password,
+      });
+      if (res?.error) {
+        console.log("res error :::: ", res);
+        setErrorMessage(res.error);
+        setPending(false);
+      } else {
+        //success
+        setPending(false);
+        router.push("/dashboard");
+      }
     } catch (error) {
       console.error("Login error:", error);
       setErrorMessage("An error occurred during login");
@@ -29,7 +50,31 @@ const Auth: React.FC = () => {
 
   return (
     <div className="auth-container">
-      <button onClick={handleSubmit}>Login</button>
+      <form>
+        {errorMessage.length > 0 ? <h2>{errorMessage}</h2> : <h2>Login</h2>}
+        <TextField
+          name={username}
+          label="Username"
+          variant="outlined"
+          value={username}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          name={password}
+          label="Password"
+          type="password"
+          variant="outlined"
+          value={password}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+      </form>
+      <button onClick={handleSubmit} disabled={pending ? true : false}>
+        {pending ? status : "Login"}
+      </button>
     </div>
   );
 };
