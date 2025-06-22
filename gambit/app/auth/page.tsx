@@ -1,8 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn, useSession } from "next-auth/react";
-import { TextField } from "@mui/material";
+import { signIn } from "next-auth/react";
+import {
+  Button,
+  Card,
+  CardHeader,
+  FormControl,
+  FormHelperText,
+  Input,
+  InputLabel,
+} from "@mui/material";
 import "./styles.css";
 
 const Auth: React.FC = () => {
@@ -49,33 +57,52 @@ const Auth: React.FC = () => {
   };
 
   return (
-    <div className="auth-container">
+    <Card
+      className="auth-container"
+      sx={{ maxWidth: 400, margin: "auto", padding: 2 }}
+    >
+      <CardHeader title="Login" />
       <form>
-        {errorMessage.length > 0 ? <h2>{errorMessage}</h2> : <h2>Login</h2>}
-        <TextField
-          name="username"
-          label="Username"
+        <FormControl fullWidth margin="normal" required error={!!errorMessage}>
+          <InputLabel htmlFor="username">Username</InputLabel>
+          <Input
+            required
+            name="username"
+            value={username}
+            onChange={handleChange}
+            id="username"
+            aria-describedby="my-helper-text"
+          />
+        </FormControl>
+        <FormControl
+          required
           variant="outlined"
-          value={username}
-          onChange={handleChange}
           fullWidth
           margin="normal"
-        />
-        <TextField
-          name="password"
-          label="Password"
-          type="password"
-          variant="outlined"
-          value={password}
-          onChange={handleChange}
+          error={!!errorMessage}
+        >
+          <InputLabel htmlFor="password">Password</InputLabel>
+          <Input
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+            id="password"
+            aria-describedby="my-helper-text"
+          />
+        </FormControl>
+        <Button
+          variant="contained"
+          type="submit"
           fullWidth
-          margin="normal"
-        />
+          onClick={handleSubmit}
+          disabled={username === "" || password === ""}
+          loading={pending}
+        >
+          Log In
+        </Button>
       </form>
-      <button onClick={handleSubmit} disabled={pending ? true : false}>
-        {pending ? "Loading" : "Login"}
-      </button>
-    </div>
+    </Card>
   );
 };
 

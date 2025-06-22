@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import Navbar from "./components/Navbar";
 import ThemeRegistry from "./providers/ThemeProvider";
@@ -22,14 +22,16 @@ export default function RootLayout({
       style={{ transitionProperty: "none", marginRight: "0px" }}
     >
       <body>
-        <UserProvider>
-          <ThemeRegistry>
+        <ThemeRegistry>
+          <UserProvider>
             <Navbar />
             <main className="app-container">
-              <div className="centered-content">{children}</div>
+              <Suspense fallback={<div>Loading...</div>}>
+                <div className="centered-content">{children}</div>
+              </Suspense>
             </main>
-          </ThemeRegistry>
-        </UserProvider>
+          </UserProvider>
+        </ThemeRegistry>
       </body>
     </html>
   );

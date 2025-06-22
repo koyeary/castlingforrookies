@@ -4,6 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { NextAuthOptions } from "next-auth";
 
 const toFormData = (obj: Record<string, string>) => {
+  console.log("Converting object to form data:", obj);
   const formBody = [];
   for (const property in obj) {
     const encodedKey = encodeURIComponent(property);
@@ -33,6 +34,7 @@ export const authOptions: NextAuthOptions = {
           password: credentials?.password || "",
         };
         const formData = toFormData(data);
+        console.log("Form data:", formData);
         try {
           const res = await fetch(
             "http://development.localhost:8000/api/method/lms_api.api.auth",
@@ -72,6 +74,7 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+  secret: process.env.JWT_SECRET,
 };
 
 export const handler = NextAuth(authOptions);

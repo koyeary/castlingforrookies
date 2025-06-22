@@ -21,6 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
   const router = useRouter();
   const pathname = usePathname();
   const { mode } = useTheme();
+  const { status } = useSession();
 
   const buttonStyles = {
     color: mode === "dark" ? "#fff" : "#000",
@@ -38,12 +39,11 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
     router.push("/");
   };
 
-  const handleLogin = () => {
-    console.log("handleLogin called");
+  const goToAuth = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log("goToAuth called");
     router.push("/auth");
   };
-
-  const { status } = useSession();
 
   return (
     <nav>
@@ -101,7 +101,7 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
                   sx={buttonStyles}
                   aria-label="Login or Sign up"
                   startIcon={<AccountCircleRoundedIcon />}
-                  onClick={handleLogin}
+                  onClick={goToAuth}
                 >
                   Login
                 </Button>
