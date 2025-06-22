@@ -1,4 +1,4 @@
-#Gambit
+# Gambit
 
 Gambit is an in-progress browser and Progressive Web Application that aims to demonstrate how to use and understand a foreign exchange market dashboard, teach how foreign exchange bets and short sells are traded, and give a peek into why and how currency trading is connected to geopolitical trends.
 
