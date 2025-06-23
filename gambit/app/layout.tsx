@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Navbar from "./components/Navbar";
 import ThemeRegistry from "./providers/ThemeProvider";
 import UserProvider from "./providers/UserProvider";
+import MenuSelectProvider from "./providers/MenuSelectProvider";
 import "@/app/ui/global.css";
 
 export const metadata: Metadata = {
@@ -24,12 +25,14 @@ export default function RootLayout({
       <body>
         <ThemeRegistry>
           <UserProvider>
-            <Navbar />
-            <main className="app-container">
-              <Suspense fallback={<div>Loading...</div>}>
-                <div className="centered-content">{children}</div>
-              </Suspense>
-            </main>
+            <MenuSelectProvider>
+              <Navbar />
+              <main className="app-container">
+                <Suspense fallback={<div>Loading...</div>}>
+                  <div className="centered-content">{children}</div>
+                </Suspense>
+              </main>
+            </MenuSelectProvider>
           </UserProvider>
         </ThemeRegistry>
       </body>
