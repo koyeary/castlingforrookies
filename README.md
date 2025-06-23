@@ -10,9 +10,10 @@ If not, see below under Instructions.
 
 ### Current To-Do
 
-- Lazy loading animations, messaging toasts, and error boundary page.
-- complete user authentication flow by connecting user database
+- smooth menu transition, resizing, and navbar update when open
 - add forex logic to dashboard components
+- lazy loading animations, messaging toasts, and error boundary page.
+- complete user authentication flow by connecting user database
 
 ## Instructions
 
