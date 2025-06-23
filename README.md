@@ -12,7 +12,7 @@ If not, see below under Instructions.
 
 - Lazy loading animations, messaging toasts, and error boundary page.
 - complete user authentication flow by connecting user database
-- reconnect user dashboard components to completed forex logic
+- add forex logic to dashboard components
 
 ## Instructions
 
