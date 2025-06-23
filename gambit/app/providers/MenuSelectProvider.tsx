@@ -1,9 +1,10 @@
+"use client";
 import React, {
+  useContext,
   createContext,
   useState,
   ReactNode,
   JSX,
-  useContext,
 } from "react";
 
 import {
@@ -31,13 +32,18 @@ const menuItems = [
     selected: true,
   },
   {
-    name: "forex",
-    text: "ForEx",
+    name: "currencies",
+    text: "Currencies",
     icon: <CurrencyExchange />,
     selected: true,
   },
   { name: "intel", text: "Intel", icon: <Newspaper />, selected: true },
-  { name: "markets", text: "Markets", icon: <LineAxis />, selected: true },
+  {
+    name: "markets",
+    text: "Markets",
+    icon: <LineAxis />,
+    selected: true,
+  },
   {
     name: "portfolio",
     text: "My Portfolio",
@@ -45,7 +51,6 @@ const menuItems = [
     selected: true,
   },
 ];
-
 interface MenuSelectContextType {
   menuItems: typeof menuItems;
   selections: Selections;
@@ -86,7 +91,7 @@ export const MenuSelectProvider: React.FC<MenuSelectProviderProps> = ({
   );
 };
 
-const useMenuSelect = () => {
+export const useMenuSelect = () => {
   const context = useContext(MenuSelectContext);
 
   if (!context) {
@@ -96,7 +101,6 @@ const useMenuSelect = () => {
   return context;
 };
 
-export { useMenuSelect };
-export const MenuSelectConsumer = MenuSelectContext.Consumer;
+//export const MenuSelectConsumer = MenuSelectContext.Consumer;
 
 export default MenuSelectProvider;

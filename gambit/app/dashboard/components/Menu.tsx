@@ -9,6 +9,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { ArrowBackIosNew } from "@mui/icons-material";
+import { useMenuSelect } from "@/app/providers/MenuSelectProvider";
 //import "./styles.css";
 
 interface Selection {
@@ -21,29 +22,15 @@ interface Selection {
 interface MenuProps {
   open: boolean;
   userName: string;
-  selections: Selection[];
   menuItems: Selection[];
-  handleSelect: (item: {
-    name: string;
-    text: string;
-    icon: React.JSX.Element;
-    selected: boolean;
-  }) => void;
   setOpen: (open: boolean) => void;
 }
 
-const Menu: React.FC<MenuProps> = ({
-  menuItems,
-  open,
-  setOpen,
-  selections,
-  handleSelect,
-  userName,
-}) => {
+const Menu: React.FC<MenuProps> = ({ menuItems, open, setOpen, userName }) => {
   const handleClose = () => setOpen(false);
 
   const [drawerWidth, setDrawerWidth] = useState("fit-content");
-
+  const { selections, handleSelect } = useMenuSelect();
   const toggleWidth = () => {
     setDrawerWidth((prevWidth) =>
       prevWidth === "fit-content" ? "300px" : "fit-content"
