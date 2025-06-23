@@ -14,7 +14,7 @@ If not, see below under Instructions.
 - Add forex logic to dashboard components
 - Lazy loading animations, messaging toasts, and error boundary page.
 - Complete user authentication flow by connecting user database
-- Longterm: complete dashboard, create tutorial, show examples of short-seller behavior in context of geopolitcal event and reporting.
+- Longterm: complete dashboard, create tutorial, show examples of short-seller behavior in context of geopolitcal events and reporting.
 
 ## Instructions
 
