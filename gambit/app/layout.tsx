@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import type { Metadata } from "next";
 import Navbar from "./components/Navbar";
 import ThemeRegistry from "./providers/ThemeProvider";
@@ -28,9 +28,7 @@ export default function RootLayout({
             <MenuSelectProvider>
               <Navbar />
               <main className="app-container">
-                <Suspense fallback={<div>Loading...</div>}>
-                  <div className="centered-content">{children}</div>
-                </Suspense>
+                <div className="centered-content">{children}</div>
               </main>
             </MenuSelectProvider>
           </UserProvider>
