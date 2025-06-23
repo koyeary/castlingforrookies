@@ -19,6 +19,10 @@ If not, see below under Instructions.
 
 Clone the repository from https://github.com/koyeary/castlingforrookies.git.
 
+To run the dashboard:
+Create a .env file in the root folder and add an entry for FOREX_API_KEY from https://forexrateapi.com/
+Navigate to /dashboard. (Auth redirects here with complete user config).
+
 Then, run the development server:
 
 ```bash
