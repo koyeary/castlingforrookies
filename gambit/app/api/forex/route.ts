@@ -29,7 +29,7 @@ interface Latest {
 export const getAllSymbols = async (): Promise<object[]> => {
   try {
     const req = await fetch(
-      `https://api.forexrateapi.com/v1/symbols?api_key=${process.env.FOREX_API_KEY}`
+      `https://api.forexrateapi.com/v1/symbols?api_key=9e9138e8666d6b96edf70c91fb6a33ee`
     );
     const data = await req.json();
 
@@ -53,7 +53,7 @@ export const getLatest = async (
 ): Promise<Latest> => {
   try {
     const req = await fetch(
-      `https://api.forexrateapi.com/v1/latest?api_key=${process.env.FOREX_API_KEY}&base=${baseCurr}&currencies=${currencies}`
+      "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json"
     );
     const data = await req.json();
 
@@ -68,7 +68,7 @@ export const getLatest = async (
   //THIS IS FIND BY BASE
   try {
     const req = await fetch(
-      "https://api.forexrateapi.com/v1/yesterday?api_key=${process.env.FOREX_API_KEY}&base=USD&currencies=EUR,JPY,INR"
+      "https://api.forexrateapi.com/v1/yesterday?api_key=9e9138e8666d6b96edf70c91fb6a33ee&base=USD&currencies=EUR,JPY,INR"
     );
     const data: Record<string, number> = await req.json();
     const transformed = Object.entries(data.rates).map(([key, value]) => ({
@@ -92,7 +92,7 @@ export const findCurrenciesBySymbol = async (
   try {
     const req = await fetch(
       `https://api.forexrateapi.com/v1/ohlc
-?api_key=${process.env.FOREX_API_KEY}&base=${baseCurr}
+?api_key=9e9138e8666d6b96edf70c91fb6a33ee&base=${baseCurr}
 &currency=${symbol}
 &date=2025-06-08`
     );

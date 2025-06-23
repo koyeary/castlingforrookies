@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { getLatest } from "@/app/api/forex/route";
 import Card from "@mui/material/Card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import Checkbox from "@mui/material/Checkbox";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import Filters from "./Filters";
 
 interface Latest {
   base: string;
@@ -17,59 +16,45 @@ interface Latest {
 }
 
 const Currencies: React.FC = () => {
-  const [data, setData] = useState<Latest>({
-    base: "",
-    timestamp: 0,
-    rates: {},
-    success: false,
-  });
-
-  const currencies = [
-    "EUR",
-    "CAD",
-    "CHF",
-    "GBP",
-    "JPY",
-    "AUD",
-    "NZD",
-    "CNY",
-    "INR",
-    "ZAR",
-  ];
+  const [data, setData] = useState({});
 
   useEffect(() => {
-    getLatest("USD", currencies)
-      .then((latestData) => {
-        setData(latestData);
-        console.log("Latest data fetched:", latestData);
-        if (latestData.success === false) {
-          console.error("Error fetching latest data:");
-          setData({
-            base: "USD",
-            timestamp: 0,
-            rates: {},
-            success: true,
-          });
-        }
-      })
-      .catch((err) => {
-        console.error("Error fetching latest data:", err);
-      });
+    const currencies = [
+      "EUR",
+      "CAD",
+      "CHF",
+      "GBP",
+      "JPY",
+      "AUD",
+      "NZD",
+      "CNY",
+      "INR",
+      "ZAR",
+    ];
+
+    const fetchData = async () => {
+      const latest = await getLatest("USD", currencies);
+      setData(latest);
+      console.log("Latest data fetched:", latest);
+    };
+
+    fetchData();
   }, []);
 
   return (
-    <Card
-      sx={{
-        borderRadius: 4,
-        padding: 2,
-        overflow: "auto",
-        width: "fit-content",
-        maxHeight: "100%",
-        height: "fit-content",
-      }}
-    >
-      <h3>Latest</h3>
-      <Table>
+    <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
+      <Filters />
+      <Card
+        sx={{
+          borderRadius: 4,
+          padding: 2,
+          overflow: "auto",
+          width: 360,
+          maxHeight: "100%",
+          height: "fit-content",
+        }}
+      >
+        {/*       <Table>
         <TableHead>
           <TableRow>
             <TableCell>Symbol</TableCell>
@@ -78,15 +63,16 @@ const Currencies: React.FC = () => {
         </TableHead>
         <TableBody>
           {data &&
-            Object.entries(data.rates).map(([symbol, rate]) => (
-              <TableRow key={symbol}>
-                <TableCell>{symbol}</TableCell>
-                <TableCell>{rate}</TableCell>
+            Object.entries(data).map(([key, value]) => (
+              <TableRow key={key}>
+                <TableCell>{key.toUpperCase()}</TableCell>
+                <TableCell>{value}</TableCell>
               </TableRow>
             ))}
         </TableBody>
-      </Table>
-    </Card>
+      </Table> */}
+      </Card>
+    </div>
   );
 };
 
