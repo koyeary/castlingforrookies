@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Menu from "./components/Menu";
+import MenuSelectProvider from "../providers/MenuSelectProvider";
 import {
   BarChart,
   CurrencyExchange,
@@ -66,7 +67,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <>
+    <MenuSelectProvider>
       <h1>Dashboard</h1>
       <Menu
         open={open}
@@ -77,7 +78,7 @@ const Dashboard: React.FC = () => {
         menuItems={menuItems}
       />
       {/*  <DashboardComponents /> */}
-    </>
+    </MenuSelectProvider>
   );
 };
 
