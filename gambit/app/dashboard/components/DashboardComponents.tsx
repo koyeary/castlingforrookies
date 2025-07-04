@@ -1,5 +1,6 @@
 import React from "react";
 import Currencies from "./Currencies";
+import MapView from "./MapView";
 import { useMenuSelect } from "@/app/providers/MenuSelectProvider";
 
 const DashboardComponents: React.FC = () => {
@@ -26,6 +27,7 @@ const DashboardComponents: React.FC = () => {
       name: "currencies",
       component: <Currencies key="currencies" />,
     },
+    { name: "mapView", component: <MapView key="mapView" /> },
     { name: "intel", component: <Intel key="intel" /> },
     { name: "markets", component: <Markets key="markets" /> },
     { name: "portfolio", component: <Portfolio key="portfolio" /> },

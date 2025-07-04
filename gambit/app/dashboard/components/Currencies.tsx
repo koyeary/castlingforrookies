@@ -1,22 +1,15 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { getLatest } from "@/app/api/forex/route";
+import React, { useEffect, useState } from "react";
+import { getLatest } from "@/app/lib/forex/utils";
 import Card from "@mui/material/Card";
-import Checkbox from "@mui/material/Checkbox";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import Filters from "./Filters";
+//import Filters from "./Filters";
 
 interface Latest {
   base: string;
-  timestamp: number;
-  rates: object;
-  success: boolean;
+  currencies: object;
 }
 
 const Currencies: React.FC = () => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState<Latest>({ base: "", currencies: {} });
 
   useEffect(() => {
     const currencies = [
@@ -34,16 +27,28 @@ const Currencies: React.FC = () => {
 
     const fetchData = async () => {
       const latest = await getLatest("USD", currencies);
-      setData(latest);
-      console.log("Latest data fetched:", latest);
+      setData({ base: "USD", currencies: latest });
+      console.log("Latest data fetched:", { base: "USD", currencies: latest });
     };
 
     fetchData();
   }, []);
 
+  /*   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setData({ ...data, base: e.target.value });
+
+    console.log(data);
+  }; */
+
   return (
     <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
-      <Filters />
+      {/*       {data && (
+        <Filters
+          currencies={data.currencies}
+          base={data.base}
+          handleChange={handleChange}
+        />
+      )} */}
       <Card
         sx={{
           borderRadius: 4,
@@ -55,22 +60,22 @@ const Currencies: React.FC = () => {
         }}
       >
         {/*       <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Symbol</TableCell>
-            <TableCell>Rate</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data &&
-            Object.entries(data).map(([key, value]) => (
-              <TableRow key={key}>
-                <TableCell>{key.toUpperCase()}</TableCell>
-                <TableCell>{value}</TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table> */}
+          <TableHead>
+            <TableRow>
+              <TableCell>Symbol</TableCell>
+              <TableCell>Rate</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data &&
+              Object.entries(data).map(([key, value]) => (
+                <TableRow key={key}>
+                  <TableCell>{key.toUpperCase()}</TableCell>
+                  <TableCell>{value}</TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table> */}
       </Card>
     </div>
   );

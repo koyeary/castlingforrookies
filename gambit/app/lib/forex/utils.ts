@@ -1,3 +1,4 @@
+import db from "../../../db";
 /* interface Flag {
   [key: string]: string; // Adjust this based on the structure of the flag data
 } */
@@ -152,4 +153,30 @@ export const findMultipleCurrencies = async () => {
   // const
   console.log(formattedData);
   return formattedData;
+};
+
+const sortedByRegion: {
+  [key: string]: {
+    currency: string;
+    code: string;
+    symbol: string;
+    country: string;
+    country_code: string;
+  }[];
+} = db.sortedByRegion;
+
+export const formatMapData = () => {
+  const continents = Object.keys(sortedByRegion);
+  const data: { id: string; value: number }[] = [];
+
+  continents.forEach((c) =>
+    sortedByRegion[c].forEach(({ country_code }) =>
+      data.push({
+        id: country_code,
+        value: parseFloat((Math.random() * 100).toFixed(2)),
+      })
+    )
+  );
+
+  return data;
 };

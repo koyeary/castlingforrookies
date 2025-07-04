@@ -1,36 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { getLatest } from "@/app/api/forex/route";
+import React, { useEffect } from "react";
 import Card from "@mui/material/Card";
-import Checkbox from "@mui/material/Checkbox";
+//import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
+//import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+//import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
-const Filters: React.FC = () => {
-  const [data, setData] = useState({});
+interface FilterProps {
+  currencies: object;
+  base: string;
+  handleChange: (
+    event: React.SyntheticEvent<Element, Event>,
+    value: string | null
+  ) => void;
+}
+
+const Filters: React.FC<FilterProps> = ({ currencies, base, handleChange }) => {
+  const options = Object.keys(currencies);
+  /*   const filterResults = React.useMemo(
+    () => options.filter((v) => v.selected),
+    [options]
+  ); */
 
   useEffect(() => {
-    const currencies = [
-      "EUR",
-      "CAD",
-      "CHF",
-      "GBP",
-      "JPY",
-      "AUD",
-      "NZD",
-      "CNY",
-      "INR",
-      "ZAR",
-    ];
-
-    const fetchData = async () => {
-      const latest = await getLatest("USD", currencies);
-      setData(latest);
-      console.log("Latest data fetched:", latest);
-    };
-
-    fetchData();
+    console.log(base);
+    console.log(currencies);
   }, []);
 
   return (
@@ -46,22 +40,21 @@ const Filters: React.FC = () => {
     >
       <h4>Select Base</h4>
       <Autocomplete
-        options={Object.keys(data)}
-        getOptionLabel={(option) => `${option.toUpperCase()} - ${data[option]}`}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Select Base Currency"
-            variant="outlined"
-          />
-        )}
+        autoHighlight
+        options={options}
+        value={base}
+        onChange={(event, value) => handleChange(event, value)}
+        getOptionLabel={(option) => option.toUpperCase()}
+        renderInput={(params) => <TextField {...params} variant="outlined" />}
       />
-      <h4>Select Currencies</h4>
+      {/*       <h4>Select Currencies</h4>
       <Autocomplete
         multiple
         disableCloseOnSelect
-        options={Object.keys(data)}
-        getOptionLabel={(option) => `${option.toUpperCase()} - ${data[option]}`}
+        options={Object.keys(currencies)}
+        getOptionLabel={(option) =>
+          `${option.toUpperCase()} - ${currencies[option]}`
+        }
         renderOption={(props, option, { selected }) => {
           const { key, ...optionProps } = props;
           return (
@@ -72,31 +65,14 @@ const Filters: React.FC = () => {
                 style={{ marginRight: 8 }}
                 checked={selected}
               />
-              {option.toUpperCase()} - {data[option]}
+              {option.toUpperCase()} - {currencies[option]}
             </li>
           );
         }}
         renderInput={(params) => (
           <TextField {...params} label="Select Currencies" variant="outlined" />
         )}
-      />
-      {/*       <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Symbol</TableCell>
-            <TableCell>Rate</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data &&
-            Object.entries(data).map(([key, value]) => (
-              <TableRow key={key}>
-                <TableCell>{key.toUpperCase()}</TableCell>
-                <TableCell>{value}</TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table> */}
+      /> */}
     </Card>
   );
 };
