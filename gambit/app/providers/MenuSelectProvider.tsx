@@ -13,6 +13,7 @@ import {
   Newspaper,
   LineAxis,
   DonutSmall,
+  Public,
 } from "@mui/icons-material";
 
 interface Selection {
@@ -29,26 +30,27 @@ const menuItems = [
     name: "analysis",
     text: "Analysis",
     icon: <BarChart />,
-    selected: true,
+    selected: false,
   },
   {
     name: "currencies",
     text: "Currencies",
     icon: <CurrencyExchange />,
-    selected: true,
+    selected: false,
   },
-  { name: "intel", text: "Intel", icon: <Newspaper />, selected: true },
+  { name: "mapView", text: "Map View", icon: <Public />, selected: true },
+  { name: "intel", text: "Intel", icon: <Newspaper />, selected: false },
   {
     name: "markets",
     text: "Markets",
     icon: <LineAxis />,
-    selected: true,
+    selected: false,
   },
   {
     name: "portfolio",
     text: "My Portfolio",
     icon: <DonutSmall />,
-    selected: true,
+    selected: false,
   },
 ];
 interface MenuSelectContextType {

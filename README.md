@@ -25,6 +25,7 @@ Open the CastlingForRookies directory and navigate to gambit/.
 Then, run npm install.
 
 To run the dashboard (optional):
+
 - Create a .env file in the root folder and add an entry for FOREX_API_KEY from https://forexrateapi.com/
 - Navigate to /dashboard. (Auth redirects here with complete user config).
 
@@ -35,4 +36,3 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-

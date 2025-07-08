@@ -1,3 +1,4 @@
+import db from "../../../db";
 /* interface Flag {
   [key: string]: string; // Adjust this based on the structure of the flag data
 } */
@@ -29,7 +30,7 @@ interface Latest {
 export const getAllSymbols = async (): Promise<object[]> => {
   try {
     const req = await fetch(
-      `https://api.forexrateapi.com/v1/symbols?api_key=${process.env.FOREX_API_KEY}`
+      `https://api.forexrateapi.com/v1/symbols?api_key=9e9138e8666d6b96edf70c91fb6a33ee`
     );
     const data = await req.json();
 
@@ -37,8 +38,8 @@ export const getAllSymbols = async (): Promise<object[]> => {
       throw new Error("No forex symbols found");
     }
 
+    console.log(data);
     const symbols = data.symbols;
-    console.log(symbols);
 
     return symbols;
   } catch (err) {
@@ -53,7 +54,7 @@ export const getLatest = async (
 ): Promise<Latest> => {
   try {
     const req = await fetch(
-      `https://api.forexrateapi.com/v1/latest?api_key=${process.env.FOREX_API_KEY}&base=${baseCurr}&currencies=${currencies}`
+      `https://api.forexrateapi.com/v1/yesterday?api_key=9e9138e8666d6b96edf70c91fb6a33ee&base=${baseCurr}&currencies=${currencies}`
     );
     const data = await req.json();
 
@@ -68,7 +69,7 @@ export const getLatest = async (
   //THIS IS FIND BY BASE
   try {
     const req = await fetch(
-      "https://api.forexrateapi.com/v1/yesterday?api_key=${process.env.FOREX_API_KEY}&base=USD&currencies=EUR,JPY,INR"
+      "https://api.forexrateapi.com/v1/yesterday?api_key=9e9138e8666d6b96edf70c91fb6a33ee&base=USD&currencies=EUR,JPY,INR"
     );
     const data: Record<string, number> = await req.json();
     const transformed = Object.entries(data.rates).map(([key, value]) => ({
@@ -92,13 +93,13 @@ export const findCurrenciesBySymbol = async (
   try {
     const req = await fetch(
       `https://api.forexrateapi.com/v1/ohlc
-?api_key=${process.env.FOREX_API_KEY}&base=${baseCurr}
+?api_key=9e9138e8666d6b96edf70c91fb6a33ee&base=${baseCurr}
 &currency=${symbol}
 &date=2025-06-08`
     );
 
     const data = await req.json();
-    console.log(data);
+
     const { base, quote, timestamp, rate } = data;
     const userRate = { base, quote, timestamp, rate };
 
@@ -123,7 +124,7 @@ const currencies = [
   "ZAR",
 ];
 
-export const findMultipleCurrencies = async () => {
+/* export const findMultipleCurrencies = async () => {
   const data = [];
 
   for (let i = 0; i < currencies.length; i++) {
@@ -139,7 +140,6 @@ export const findMultipleCurrencies = async () => {
     timestamp: number;
   }[];
 
-  console.log(resolvedRates[0].rate);
   const formattedData = resolvedRates.map((rate) => ({
     quote: rate.quote,
     base: rate.base,
@@ -149,7 +149,45 @@ export const findMultipleCurrencies = async () => {
     close: rate.rate.close,
     timestamp: rate.timestamp,
   }));
-  // const
+
   console.log(formattedData);
   return formattedData;
+}; */
+
+const allSymbols = db.withCentralBank;
+const rates = db.usdExchange.rates;
+const invertedQuotes = db.invertedQuotes.quotes;
+const compileRatesAndRegions = async () => {
+  console.log(invertedQuotes);
+
+  const compiledData = await Promise.all(
+    allSymbols.map((symbol) => {
+      const invertedEntry = Object.entries(invertedQuotes).find(
+        ([currency]) => currency === symbol.code
+      );
+      const inverted = invertedEntry
+        ? { rate: invertedEntry[1], inv_rate: 1 / invertedEntry[1] }
+        : { rate: 0, inv_rate: 0 };
+
+      return {
+        ...symbol,
+        rate: inverted.rate,
+        inv_rate: inverted.inv_rate,
+      };
+    })
+  );
+
+  return compiledData;
+};
+
+export const formatMapData = async () => {
+  //const rates = await compileRatesAndRegions();
+  const getRates = await getLatest("USD", currencies);
+  console.log(getRates);
+
+  const data: [string, string | number][] = [];
+
+  data.push(["Country", "Value"]);
+
+  return data;
 };
