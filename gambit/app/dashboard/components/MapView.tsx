@@ -1,48 +1,50 @@
 import React, { useEffect, useState } from "react";
 import { formatMapData } from "@/app/lib/forex/utils";
-import { ResponsiveChoropleth } from "@nivo/geo";
+import { Chart } from "react-google-charts";
+import { useLoadScript } from "@react-google-maps/api";
 
 const MapView: React.FC = () => {
-  const [series, setSeries] = useState<{ id: string; value: number }[]>([]);
+  const [mapData, setMapData] = useState<[string, string | number][]>([]);
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: "AIzaSyCdlnV0WH0QQ5kcklHnFPBjc2iUcX6580g",
+    // Add any other libraries needed, e.g., libraries: ['places']
+  });
 
+  const formatData = async () => {
+    const data = await formatMapData();
+    return setMapData(data);
+  };
   useEffect(() => {
-    const data = formatMapData(); // only runs on client
-    setSeries(data);
+    formatData();
   }, []);
 
+  if (loadError) return <div>Error loading maps</div>;
+  if (!isLoaded) return <div>Loading Maps...</div>;
+
   return (
-    <div style={{ width: "80vw", height: "50vh" }}>
-      <h1>MapView Component</h1>
-      <ResponsiveChoropleth
-        data={series}
-        features={[]} // make sure this isn't dynamic or undefined
-        margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-        colors="nivo"
-        domain={[0, 1000000]}
-        unknownColor="#666666"
-        label="properties.name"
-        valueFormat=".2s"
-        enableGraticule={true}
-        graticuleLineColor="#dddddd"
-        borderWidth={0.5}
-        borderColor="#152538"
-        legends={[
-          {
-            anchor: "bottom-left",
-            direction: "column",
-            justify: true,
-            translateX: 20,
-            translateY: -100,
-            itemsSpacing: 0,
-            itemWidth: 94,
-            itemHeight: 18,
-            itemDirection: "left-to-right",
-            itemTextColor: "#444444",
-            itemOpacity: 0.85,
-            symbolSize: 18,
-          },
-        ]}
-      />
+    <div style={{ width: "90vw", height: "auto" }}>
+      {!isLoaded ? (
+        <div>loading ...</div>
+      ) : (
+        <Chart
+          chartEvents={[
+            {
+              eventName: "select",
+              callback: ({ chartWrapper }) => {
+                const chart = chartWrapper.getChart();
+                const selection = chart.getSelection();
+                if (selection.length === 0) return;
+                const region = mapData[selection[0].row + 1];
+                console.log("Selected : " + region);
+              },
+            },
+          ]}
+          chartType="GeoChart"
+          width="100%"
+          height="100%"
+          data={mapData}
+        />
+      )}
     </div>
   );
 };

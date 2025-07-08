@@ -38,8 +38,8 @@ export const getAllSymbols = async (): Promise<object[]> => {
       throw new Error("No forex symbols found");
     }
 
+    console.log(data);
     const symbols = data.symbols;
-    console.log(symbols);
 
     return symbols;
   } catch (err) {
@@ -54,7 +54,7 @@ export const getLatest = async (
 ): Promise<Latest> => {
   try {
     const req = await fetch(
-      "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json"
+      `https://api.forexrateapi.com/v1/yesterday?api_key=9e9138e8666d6b96edf70c91fb6a33ee&base=${baseCurr}&currencies=${currencies}`
     );
     const data = await req.json();
 
@@ -99,7 +99,7 @@ export const findCurrenciesBySymbol = async (
     );
 
     const data = await req.json();
-    console.log(data);
+
     const { base, quote, timestamp, rate } = data;
     const userRate = { base, quote, timestamp, rate };
 
@@ -124,7 +124,7 @@ const currencies = [
   "ZAR",
 ];
 
-export const findMultipleCurrencies = async () => {
+/* export const findMultipleCurrencies = async () => {
   const data = [];
 
   for (let i = 0; i < currencies.length; i++) {
@@ -140,7 +140,6 @@ export const findMultipleCurrencies = async () => {
     timestamp: number;
   }[];
 
-  console.log(resolvedRates[0].rate);
   const formattedData = resolvedRates.map((rate) => ({
     quote: rate.quote,
     base: rate.base,
@@ -150,33 +149,45 @@ export const findMultipleCurrencies = async () => {
     close: rate.rate.close,
     timestamp: rate.timestamp,
   }));
-  // const
+
   console.log(formattedData);
   return formattedData;
+}; */
+
+const allSymbols = db.withCentralBank;
+const rates = db.usdExchange.rates;
+const invertedQuotes = db.invertedQuotes.quotes;
+const compileRatesAndRegions = async () => {
+  console.log(invertedQuotes);
+
+  const compiledData = await Promise.all(
+    allSymbols.map((symbol) => {
+      const invertedEntry = Object.entries(invertedQuotes).find(
+        ([currency]) => currency === symbol.code
+      );
+      const inverted = invertedEntry
+        ? { rate: invertedEntry[1], inv_rate: 1 / invertedEntry[1] }
+        : { rate: 0, inv_rate: 0 };
+
+      return {
+        ...symbol,
+        rate: inverted.rate,
+        inv_rate: inverted.inv_rate,
+      };
+    })
+  );
+
+  return compiledData;
 };
 
-const sortedByRegion: {
-  [key: string]: {
-    currency: string;
-    code: string;
-    symbol: string;
-    country: string;
-    country_code: string;
-  }[];
-} = db.sortedByRegion;
+export const formatMapData = async () => {
+  //const rates = await compileRatesAndRegions();
+  const getRates = await getLatest("USD", currencies);
+  console.log(getRates);
 
-export const formatMapData = () => {
-  const continents = Object.keys(sortedByRegion);
-  const data: { id: string; value: number }[] = [];
+  const data: [string, string | number][] = [];
 
-  continents.forEach((c) =>
-    sortedByRegion[c].forEach(({ country_code }) =>
-      data.push({
-        id: country_code,
-        value: parseFloat((Math.random() * 100).toFixed(2)),
-      })
-    )
-  );
+  data.push(["Country", "Value"]);
 
   return data;
 };
