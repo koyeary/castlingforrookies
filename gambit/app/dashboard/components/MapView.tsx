@@ -6,7 +6,7 @@ import { useLoadScript } from "@react-google-maps/api";
 const MapView: React.FC = () => {
   const [mapData, setMapData] = useState<[string, string | number][]>([]);
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyCdlnV0WH0QQ5kcklHnFPBjc2iUcX6580g",
+    googleMapsApiKey: `${process.env.GOOGLE_MAPS}`,
     // Add any other libraries needed, e.g., libraries: ['places']
   });
 
