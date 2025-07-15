@@ -1,50 +1,55 @@
 import React, { useEffect, useState } from "react";
-import { formatMapData } from "@/app/lib/forex/utils";
-import { Chart } from "react-google-charts";
-import { useLoadScript } from "@react-google-maps/api";
+//import { formatMapData } from "@/app/lib/forex/utils";
+//import { Chart } from "react-google-charts";
+//import { useLoadScript } from "@react-google-maps/api";
 
 const MapView: React.FC = () => {
-  const [mapData, setMapData] = useState<[string, string | number][]>([]);
-  const { isLoaded, loadError } = useLoadScript({
+  // const [mapData, setMapData] = useState<[string, string | number][]>([]);
+  /*   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: `${process.env.GOOGLE_MAPS}`,
     // Add any other libraries needed, e.g., libraries: ['places']
-  });
+  }); */
 
-  const formatData = async () => {
+  /*   const formatData = async () => {
     const data = await formatMapData();
     return setMapData(data);
   };
   useEffect(() => {
     formatData();
-  }, []);
+  }, []); */
 
-  if (loadError) return <div>Error loading maps</div>;
-  if (!isLoaded) return <div>Loading Maps...</div>;
+  /*    eventLogger = (e: MouseEvent, data: Object) => {
+     console.log("Event: ", e);
+     console.log("Data: ", data);
+   }; */
+
+  /*   if (loadError) return <div>Error loading maps</div>;
+  if (!isLoaded) return <div>Loading Maps...</div>; */
 
   return (
-    <div style={{ width: "90vw", height: "auto" }}>
-      {!isLoaded ? (
-        <div>loading ...</div>
-      ) : (
-        <Chart
-          chartEvents={[
-            {
-              eventName: "select",
-              callback: ({ chartWrapper }) => {
-                const chart = chartWrapper.getChart();
-                const selection = chart.getSelection();
-                if (selection.length === 0) return;
-                const region = mapData[selection[0].row + 1];
-                console.log("Selected : " + region);
+    <div style={{ width: "90vw", height: "30vw", position: "relative" }}>
+      {/* {!isLoaded ? (
+          <div>loading ...</div>
+        ) : (
+          <Chart
+            chartEvents={[
+              {
+                eventName: "select",
+                callback: ({ chartWrapper }) => {
+                  const chart = chartWrapper.getChart();
+                  const selection = chart.getSelection();
+                  if (selection.length === 0) return;
+                  const region = mapData[selection[0].row + 1];
+                  console.log("Selected : " + region);
+                },
               },
-            },
-          ]}
-          chartType="GeoChart"
-          width="100%"
-          height="100%"
-          data={mapData}
-        />
-      )}
+            ]}
+            chartType="GeoChart"
+            width="100%"
+            height="100%"
+            data={mapData}
+          />
+        )} */}
     </div>
   );
 };

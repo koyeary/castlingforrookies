@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getLatest } from "@/app/lib/forex/utils";
 import Card from "@mui/material/Card";
+import Draggable from "react-draggable";
 //import Filters from "./Filters";
 
 interface Latest {
@@ -10,7 +11,8 @@ interface Latest {
 
 const Currencies: React.FC = () => {
   const [data, setData] = useState<Latest>({ base: "", currencies: {} });
-
+  const nodeRef = useRef<HTMLDivElement>(null);
+  /* 
   useEffect(() => {
     const currencies = [
       "EUR",
@@ -23,16 +25,16 @@ const Currencies: React.FC = () => {
       "CNY",
       "INR",
       "ZAR",
-    ];
+    ]; */
 
-    const fetchData = async () => {
+  /*     const fetchData = async () => {
       const latest = await getLatest("USD", currencies);
       setData({ base: "USD", currencies: latest });
       console.log("Latest data fetched:", { base: "USD", currencies: latest });
     };
 
     fetchData();
-  }, []);
+  }, []); */
 
   /*   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, base: e.target.value });
@@ -49,17 +51,19 @@ const Currencies: React.FC = () => {
           handleChange={handleChange}
         />
       )} */}
-      <Card
-        sx={{
-          borderRadius: 4,
-          padding: 2,
-          overflow: "auto",
-          width: 360,
-          maxHeight: "100%",
-          height: "fit-content",
-        }}
-      >
-        {/*       <Table>
+      <Draggable nodeRef={nodeRef}>
+        <Card
+          ref={nodeRef}
+          sx={{
+            borderRadius: 4,
+            padding: 2,
+            overflow: "auto",
+            width: 360,
+            maxHeight: "100%",
+            height: "fit-content",
+          }}
+        >
+          {/*       <Table>
           <TableHead>
             <TableRow>
               <TableCell>Symbol</TableCell>
@@ -76,7 +80,8 @@ const Currencies: React.FC = () => {
               ))}
           </TableBody>
         </Table> */}
-      </Card>
+        </Card>
+      </Draggable>
     </div>
   );
 };

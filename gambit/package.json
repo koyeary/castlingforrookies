@@ -23,6 +23,7 @@
     "next-auth": "^4.24.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-draggable": "^4.5.0",
     "react-google-charts": "^5.2.1",
     "react-map-gl": "^8.0.4",
     "react-spring": "^10.0.1"
