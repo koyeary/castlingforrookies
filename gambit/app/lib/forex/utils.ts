@@ -181,9 +181,9 @@ const compileRatesAndRegions = async () => {
 };
 
 export const formatMapData = async () => {
-  //const rates = await compileRatesAndRegions();
-  const getRates = await getLatest("USD", currencies);
-  console.log(getRates);
+  const rates = await compileRatesAndRegions();
+  //const getRates = await getLatest("USD", currencies);
+  console.log(rates);
 
   const data: [string, string | number][] = [];
 

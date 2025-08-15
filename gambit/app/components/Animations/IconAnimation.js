@@ -2,6 +2,7 @@ import React from "react";
 import { useChain, useSpring, useSpringRef, a } from "react-spring";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChessKnight } from "@fortawesome/free-solid-svg-icons";
+import "../components.css";
 
 const IconAnimation = () => {
   const transYRef = useSpringRef();

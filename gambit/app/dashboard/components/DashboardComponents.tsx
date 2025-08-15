@@ -34,7 +34,7 @@ const DashboardComponents: React.FC = () => {
   ];
 
   return (
-    <div style={{ height: "80vh", overflow: "hidden" }}>
+    <div style={{ width: "95vw", height: "90vh", overflow: "hidden" }}>
       {selections.map(
         (item) =>
           item.selected &&
