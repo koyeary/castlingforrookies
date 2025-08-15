@@ -2,7 +2,7 @@
 import React from "react";
 import Menu from "./components/Menu";
 import { useMenuSelect } from "../providers/MenuSelectProvider";
-import DashboardComponents from "./components/DashboardComponents";
+//import DashboardComponents from "./components/DashboardComponents";
 
 const Dashboard: React.FC = () => {
   const { menuItems } = useMenuSelect();
@@ -15,7 +15,7 @@ const Dashboard: React.FC = () => {
         menuItems={menuItems}
         userName="User"
       />
-      <DashboardComponents />
+      {/*    <DashboardComponents /> */}
     </>
   );
 };

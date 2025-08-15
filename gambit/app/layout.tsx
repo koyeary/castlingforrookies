@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
-import Navbar from "./components/Navbar";
+//import Navbar from "./components/Navbar";
 import ThemeRegistry from "./providers/ThemeProvider";
 /* import UserProvider from "./providers/UserProvider"; */
 import MenuSelectProvider from "./providers/MenuSelectProvider";
@@ -9,7 +9,7 @@ import "@/app/ui/global.css";
 export const metadata: Metadata = {
   title: "Gambit",
   description:
-    "Learn about the ForEx market and how to short-sell currencies with Gambit",
+    "Gambit is a platform for currency traders, providing real-time global intelligence and insights to enhance trading strategies.",
 };
 
 export default function RootLayout({

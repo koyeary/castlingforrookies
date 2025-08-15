@@ -1,5 +1,6 @@
 import React from "react";
 import { useSpring, a } from "react-spring";
+import "../components.css";
 
 const TitleAnimation = () => {
   const style = useSpring({

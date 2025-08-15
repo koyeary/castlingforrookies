@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { ArrowBackIosNew } from "@mui/icons-material";
 import { useMenuSelect } from "@/app/providers/MenuSelectProvider";
+import DashboardComponents from "./DashboardComponents";
 //import "./styles.css";
 
 interface Selection {
@@ -38,64 +39,66 @@ const Menu: React.FC<MenuProps> = ({ menuItems, open, setOpen, userName }) => {
   };
 
   return (
-    <Drawer
-      anchor="left"
-      variant="persistent"
-      open={open}
-      onClose={handleClose}
-      elevation={16}
-      sx={{
-        width: drawerWidth,
-        "& .MuiDrawer-paper": {
+    <>
+      <Drawer
+        anchor="left"
+        variant="persistent"
+        open={open}
+        onClose={handleClose}
+        /*       sx={{
           width: drawerWidth,
-        },
-      }}
-    >
-      <ArrowBackIosNew className="close-icon" onClick={toggleWidth} />
-      {drawerWidth === "300px" && (
-        <h2 className="menu-header">Hi, {userName}</h2>
-      )}
-      <List
-        component="nav"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          "& .MuiListItemButton-root": {
-            width: "100%",
-            justifyContent: "center",
-            padding: 1,
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
           },
-          "& .MuiListItemIcon-root": {
-            minWidth: "30px",
-            marginLeft: 1,
-          },
-          "& .MuiListItemText-root": {
-            display: drawerWidth === "fit-content" ? "none" : "block",
-            marginLeft: 2,
-          },
-        }}
+        }} */
       >
-        {menuItems.map((item, index) => (
-          <ListItem key={item.name} disableGutters>
-            <ListItemButton
-              sx={{
-                justifyContent:
-                  drawerWidth === "fit-content" ? "center" : "flex-start",
-                padding: 1,
-              }}
-              selected={selections[index].selected}
-              onClick={() => handleSelect(item)}
-            >
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              {drawerWidth === "fit-content" ? null : (
-                <ListItemText primary={item.text} />
-              )}
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Drawer>
+        <ArrowBackIosNew className="close-icon" onClick={toggleWidth} />
+        {drawerWidth === "300px" && (
+          <h2 className="menu-header">Hi, {userName}</h2>
+        )}
+        <List
+          component="nav"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            "& .MuiListItemButton-root": {
+              width: "100%",
+              justifyContent: "center",
+              padding: 1,
+            },
+            "& .MuiListItemIcon-root": {
+              minWidth: "30px",
+              marginLeft: 1,
+            },
+            "& .MuiListItemText-root": {
+              display: drawerWidth === "fit-content" ? "none" : "block",
+              marginLeft: 2,
+            },
+          }}
+        >
+          {menuItems.map((item, index) => (
+            <ListItem key={item.name} disableGutters>
+              <ListItemButton
+                sx={{
+                  justifyContent:
+                    drawerWidth === "fit-content" ? "center" : "flex-start",
+                  padding: 1,
+                }}
+                selected={selections[index].selected}
+                onClick={() => handleSelect(item)}
+              >
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                {drawerWidth === "fit-content" ? null : (
+                  <ListItemText primary={item.text} />
+                )}
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+      <DashboardComponents />
+    </>
   );
 };
 
